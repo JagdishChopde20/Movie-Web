@@ -1,0 +1,11 @@
+.section-grid {
+    display: grid;
+    grid-template-columns: [grid-start] minmax(15px, 1fr) [content-start] minmax(min-content, 117rem) [content-end] minmax(15px, 1fr) [grid-end];
+    grid-gap: 3rem;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+}

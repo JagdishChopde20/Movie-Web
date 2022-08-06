@@ -1,0 +1,86 @@
+.hero {
+  // background-image: linear-gradient(rgba(0, 0, 0, .9), rgba(0, 0, 0, .9)), url('https://image.tmdb.org/t/p/w1280/ocUp7DJBIc8VJgLEw1prcyK1dYv.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  background-color: $color-accent;
+  background-blend-mode: overlay;
+  background-position: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .tagline {
+    padding: 3rem 5rem;
+    background-color: rgba(#000, 0.6);
+    width: 80%;
+
+    &__text {
+      font-size: 6rem;
+      color: #fff;
+      font-style: bold;
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+}
+
+.overview {
+  &__content {
+    grid-column: content-start / content-end;
+
+    &--poster {
+      .poster {
+        width: 100%;
+      }
+    }
+
+    &--details {
+      padding: 1rem 0;
+
+      .movie-title {
+        font-size: 5rem;
+        font-family: $font-head;
+      }
+
+      // .genres {
+
+      // }
+    }
+  }
+}
+
+.genres {
+  &__content {
+    grid-column: content-start / content-end;
+
+    &--items {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .genre {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 6rem;
+
+        &:not(:last-child) {
+          margin-right: 4rem;
+        }
+
+        &__icon {
+          width: 20rem;
+        }
+        &__text {
+          font-size: 2rem;
+          font-family: $font-body;
+          margin-top: 2rem;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.chip {
+    font-size: 2rem;
+    font-family: $font-body;
+    // border: 3px solid $color-accent;
+    padding: 1rem 1.7rem;
+    color: $color-accent;
+    background-color: rgba($color-accent, .2);
+    margin-right: 2rem;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
