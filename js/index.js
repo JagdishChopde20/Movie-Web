@@ -41,11 +41,17 @@ getMovieDetails(id).then(data => {
 
         // Set Tagline
         const tagline = document.querySelector('.tagline__text') as HTMLElement;
-        tagline.textContent = data.tagline ? data.tagline : data.title;
+        tagline.textContent = data.tagline;
 
         // Set Poster
         const poster = document.querySelector('.poster');
         poster.src = poster_baseurl + data.poster_path;
+
+        // Set Movie Title Image
+        if (data.images?.logos[0]?.file_path) {
+            const imgTitle = document.querySelector('.img-movie-title');
+            imgTitle.src = poster_baseurl + data.images.logos[0].file_path;
+        }
 
         // Set Title
         const title = document.querySelector('.movie-title');
@@ -134,12 +140,57 @@ getMovieDetails(id).then(data => {
                     break;
             }
 
-            const chip = `  <div class="genre">
+            const itemHTML = `  <figure class="genre">
                                 <img class="genre__icon" src="${genreImg}" alt="${element.name}">
-                                <h4 class="genre__text"> ${element.name} </h4>
-                            </div>`;
-            genres.insertAdjacentHTML('beforeend', chip);
+                                <figcaption class="genre__text"> ${element.name} </figcaption>
+                            </figure>`;
+            genres.insertAdjacentHTML('beforeend', itemHTML);
         });
+
+        // Set Storyline Background
+        const storyline_container = document.querySelector('.storyline');
+        storyline_container.style.backgroundImage = `url(${backdrop_baseurl + data.images.backdrops[1].file_path})`;
+
+        // Set Storyline
+        const storyline = document.querySelector('.storyline__content--items');
+        storyline.textContent = data.overview;
+
+
+        // Set Cast 4
+        if (data.credits && data.credits.cast && data.credits.cast.length > 0) {
+            let castsToShow = [];
+            if (data.credits.cast.length > 8) {
+                castsToShow = data.credits.cast.slice(0, 7);
+            } else {
+                castsToShow = data.credits.cast.slice(0, 8);
+            }
+
+            const casts = document.querySelector('.casts__content--items');
+            castsToShow.forEach(element => {
+                const photoUrl = poster_baseurl + element.profile_path;
+                const itemHTML = `  <figure class="cast">
+                                        <img class="cast__photo" src="${photoUrl}" alt="Photo of ${element.name}">
+                                        <figcaption class="cast__text">
+                                            <h4 class="cast-name">${element.name}</h4>
+                                            <p class="cast-as">${element.character}</p>
+                                        </figcaption>
+                                    </figure>`;
+                casts.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            if (data.credits.cast.length > 8) {
+                const viewAllHTML = `<div class="view-all-casts">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                casts.insertAdjacentHTML('beforeend', viewAllHTML);
+            }
+        } else {
+            // Hide Casts Section
+            const casts_section = document.querySelector('.casts') as HTMLElement;
+            casts_section.style.display = 'none';
+        }
+
+
     } catch (error) {
         console.error(error);
     }

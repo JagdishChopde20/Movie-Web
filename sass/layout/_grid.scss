@@ -9,3 +9,15 @@
     grid-template-columns: 1fr 2fr;
     gap: 5rem;
 }
+
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(36rem, 1fr));
+    gap: 3rem;
+}
+
+.item-small-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    gap: 3rem;
+}
