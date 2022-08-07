@@ -1,7 +1,7 @@
 html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: $color-text; 
-    background-color: $color-light;
+    color: var(--color-text); 
+    background-color: var(--color-light);
     font-size: 62.5%;
     scroll-behavior: smooth;
 }

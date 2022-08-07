@@ -1,11 +1,31 @@
-// COLORS
-$color-text: #333;
-$color-dark: #0f0e0e;
-$color-light: #eeeeee;
-$color-accent: #1e3799;
-$color-accent1: #78e08f;
+:root {
+  // COLORS
+  --color-accent: #1e3799;
+  --color-accent-rgb: 30, 55, 153;
+  --color-accent-contrast: #ffffff;
+  --color-accent-contrast-rgb: 255, 255, 255;
+  --color-accent-shade: #1a3087;
+  --color-accent-tint: #354ba3;
 
-// FONTS
-$font-head: "Fahkwang", sans-serif;
-$font-body: "Comfortaa", cursive;
-$font-cursive: "Great Vibes", cursive;
+  --color-text: #333;
+  --color-dark: #0f0e0e;
+  --color-light: #eeeeee;
+  --color-accent1: #78e08f;
+
+  // FONTS
+  --font-head: "Fahkwang", sans-serif;
+  --font-body: "Comfortaa", cursive;
+  --font-cursive: "Great Vibes", cursive;
+}
+
+// COLORS
+// $color-text: #333;
+// $color-dark: #0f0e0e;
+// $color-light: #eeeeee;
+// $color-accent: #1e3799;
+// $color-accent1: #78e08f;
+
+// // FONTS
+// $font-head: "Fahkwang", sans-serif;
+// $font-body: "Comfortaa", cursive;
+// $font-cursive: "Great Vibes", cursive;

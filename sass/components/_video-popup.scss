@@ -1,0 +1,76 @@
+.video-popup {
+    visibility: hidden;
+    opacity: 0;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 900;
+
+    backdrop-filter: blur(10px);
+    transition: all .3s;
+}
+
+.video-container {
+    visibility: hidden;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 901;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .video-content {
+        position: relative;
+        width: 100vw;
+        height: 56.27vw;
+        max-width: 1020px;
+        max-height: 574px;
+        overflow: hidden;
+        margin: 0 5px;
+        /* 16:9 Aspect Ratio */
+        box-shadow: 0 0 8px rgb(0 0 0 / 60%);
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    }
+    
+    #btnCloseVideoPopup {
+        background: transparent;
+        color: #ccc;
+        font-size: 2.5rem;
+
+        position: absolute;
+        right: 5rem;
+        top: 3rem;
+        cursor: pointer;
+        transition: all .3s;
+        border: 0;
+
+        &:hover {
+            color: #fff;
+        }
+
+        &:active {
+            color: var(--color-accent);
+        }
+    }
+}

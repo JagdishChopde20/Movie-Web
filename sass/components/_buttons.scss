@@ -1,12 +1,49 @@
 .chip {
-    font-size: 2rem;
-    font-family: $font-body;
-    // border: 3px solid $color-accent;
-    padding: 1rem 1.7rem;
-    color: $color-accent;
-    background-color: rgba($color-accent, .2);
+  font-size: 2rem;
+  font-family: var(--font-body);
+  // border: 3px solid --color-accent;
+  padding: 1rem 1.7rem;
+  color: var(--color-accent);
+  background-color: rgb(var(--color-accent-rgb), .2);
+  margin-right: 2rem;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+
+//   @include backgroundcolor(red, .2);
+}
+
+.play-video-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s;
+  letter-spacing: 2px;
+  color: var(--color-accent);
+
+  &__icon {
+    font-size: 5rem;
     margin-right: 2rem;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 1.5rem;
+    transition: all 0.3s;
+  }
+  &__text {
+    font-size: 2rem;
+    font-family: var(--font-body);
+  }
+
+  &:hover:not(:disabled) {
+    color: var(--color-accent-shade);
+    letter-spacing: 1px;
+  }
+  &:hover:not(:disabled) &__icon {
+    margin-right: 1.5rem;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+  &:disabled {
+    color: #aaa;
+  }
 }

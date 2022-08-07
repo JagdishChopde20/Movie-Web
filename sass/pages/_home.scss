@@ -3,7 +3,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
-  background-color: $color-accent;
+  background-color: var(--color-accent-shade);
   background-blend-mode: overlay;
   background-position: center;
 
@@ -42,7 +42,7 @@
 
       .movie-title {
         font-size: 5rem;
-        font-family: $font-head;
+        font-family: var(--font-head);
       }
 
       // .genres {
@@ -80,7 +80,7 @@
         }
         &__text {
           font-size: 2rem;
-          font-family: $font-body;
+          font-family: var(--font-body);
           margin-top: 2rem;
         }
       }
@@ -93,20 +93,20 @@
   //   url("https://image.tmdb.org/t/p/w1280/ocUp7DJBIc8VJgLEw1prcyK1dYv.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: $color-accent;
+  background-color: var(--color-accent-shade);
   background-blend-mode: overlay;
   background-position: center;
 
   &__content {
     grid-column: content-start / content-end;
-    color: $color-light;
+    color: var(--color-light);
     padding: 6rem 10rem;
     background-color: rgba(#000, 0.8);
 
     &--items {
       text-align: justify;
       font-size: 3rem;
-      font-family: $font-body;
+      font-family: var(--font-body);
       line-height: 4.5rem;
     }
   }
@@ -141,20 +141,20 @@
         }
         &__text {
           font-size: 2rem;
-          font-family: $font-body;
+          font-family: var(--font-body);
           margin-top: 2rem;
           text-align: center;
 
           .cast-as {
             margin-top: 1rem;
             font-size: 1.5rem;
-            color: rgba($color-text, 0.8);
+            color: rgba(var(--color-text), 0.8);
           }
         }
       }
 
       .view-all-casts {
-        color: $color-light;
+        color: var(--color-light);
         background-color: #ddd;
         margin-bottom: 130px;
         display: flex;
@@ -166,6 +166,7 @@
 
         &:hover {
           background-color: #fff;
+          color: rgba(var(--color-accent-rgb), 1);
         }
         &:active {
           transform: scale(0.95);

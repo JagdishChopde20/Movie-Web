@@ -42,9 +42,10 @@
                         <span class="chip runtime">runtime</span>
                     </div>
 
-                    <div class="chips genres margin-top-medium">
-
-                    </div>
+                    <button class="play-video-button margin-top-medium">
+                        <i class="fas fa-play play-video-button__icon"></i>
+                        <span class="play-video-button__text">Play Trailer</span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -53,10 +54,7 @@
             <div class="genres__content">
                 <h2 class="section-title">Movie Genres</h2>
                 <div class="genres__content--items">
-                    <!-- <div class="genre">
-                        <img class="genre__icon" src="/assets/genres-icons/Action.png" alt="Action">
-                        <h4 class="genre__text"> Action </h4>
-                    </div> -->
+                    <!-- items from js -->
                 </div>
             </div>
         </section>
@@ -74,11 +72,22 @@
             <div class="casts__content">
                 <h2 class="section-title">Casts</h2>
                 <div class="casts__content--items item-small-grid">
-                    
+                   <!-- items from js --> 
                 </div>
             </div>
         </section>
     </main>
+
+
+    <div class="video-popup">
+    </div>
+    <div class="video-container">
+        <button id="btnCloseVideoPopup" title="Close"><i class="fas fa-times"></i></button>
+        <div class="video-content">
+            <iframe id="iframe-video" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
 
 </body>
 

@@ -1,6 +1,22 @@
 // @ts-check
 
-import { getMovieDetails, genres } from "./api/api-movie";
+import { hexToRgb, themeColors } from "./globals";
+
+// Set Random Accent Color
+const themeColor = themeColors[Math.floor(Math.random() * themeColors.length)];
+
+// Get the root element
+var r = document.querySelector(':root');
+
+// Set the value of accent color css variables
+r.style.setProperty('--color-accent', themeColor.color);
+r.style.setProperty('--color-accent-rgb', themeColor.colorRgb);
+r.style.setProperty('--color-accent-contrast', themeColor.colorContrast);
+r.style.setProperty('--color-accent-shade', themeColor.colorShade);
+r.style.setProperty('--color-accent-tint', themeColor.colorTint);
+
+
+import { getMovieDetails, genres } from "./api-movie";
 import { signup } from "./popups/sign-up-in";
 
 // GENRES IMAGES
@@ -72,6 +88,32 @@ getMovieDetails(id).then(data => {
         // Set Runtime
         const runtime = document.querySelector('.runtime');
         runtime.textContent = data.runtime + (data.runtime ? ' MINS' : '');
+
+        // Set Trailer
+        if (data.videos?.results?.length > 0) {
+            let trailer_key = data.videos?.results?.find(item => item.name === 'Official Trailer')?.key;
+            trailer_key = trailer_key ? trailer_key : data.videos?.results[0]?.key;
+            if (trailer_key) {
+                const trailer_path = 'https://www.youtube.com/embed/' + trailer_key;
+                const videoiframe = document.getElementById('iframe-video');
+                videoiframe.src = trailer_path;
+            } else {
+                // Disable video button
+                const playBtn = document.querySelector('.play-video-button') as HTMLElement;
+                playBtn.disabled = true;
+                // Set No Trailer Available
+                const playBtnText = document.querySelector('.play-video-button__text');
+                playBtnText.textContent = 'Trailer Not Available';
+            }
+
+        } else {
+            // Disable video button
+            const playBtn = document.querySelector('.play-video-button') as HTMLElement;
+            playBtn.disabled = true;
+            // Set No Trailer Available
+            const playBtnText = document.querySelector('.play-video-button__text');
+            playBtnText.textContent = 'Trailer Not Available';
+        }
 
         // Set Genres
         const genres = document.querySelector('.genres__content--items');
@@ -189,9 +231,44 @@ getMovieDetails(id).then(data => {
             const casts_section = document.querySelector('.casts') as HTMLElement;
             casts_section.style.display = 'none';
         }
-
-
     } catch (error) {
         console.error(error);
     }
 });
+
+
+
+// VIDEO POPUP OPEN / CLSOE LOGIC
+
+document.querySelector('.play-video-button').addEventListener('click', openVideoPopup);
+
+function openVideoPopup() {
+    const videopopup = document.querySelector('.video-popup');
+    videopopup.style.visibility = 'visible';
+    videopopup.style.opacity = '.8';
+
+    const videocontainer = document.querySelector('.video-container');
+    videocontainer.style.visibility = 'visible';
+
+    const body = document.querySelector('body');
+    body.style.overflow = 'hidden';
+}
+
+document.querySelector('.video-container').addEventListener('click', closeVideoPopup);
+
+function closeVideoPopup() {
+    const videopopup = document.querySelector('.video-popup');
+    videopopup.style.visibility = 'hidden';
+    videopopup.style.opacity = '0';
+
+    const videocontainer = document.querySelector('.video-container');
+    videocontainer.style.visibility = 'hidden';
+
+    const videoiframe = document.querySelector('.video-content iframe');
+    var url = videoiframe.getAttribute('src');
+    videoiframe.setAttribute('src', '');
+    videoiframe.setAttribute('src', url);
+
+    const body = document.querySelector('body');
+    body.style.overflow = 'auto';
+}
