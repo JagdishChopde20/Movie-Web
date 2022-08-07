@@ -3,8 +3,20 @@
 const apiKey = 'fa95cddfa25a27f18e30bbdbd383054b';
 const baseUrl = 'https://api.themoviedb.org/3';
 
+const getHttpResult = async (url) => {
+    try {
+        const res = await fetch(url);
+        let data = await res.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+    return null;
+
+}
+
 export const getMovieDetails = async (id) => {
-    const url = `${baseUrl}/movie/${id}?api_key=${apiKey}&language=en-US&include_image_language=en,null&append_to_response=images,videos,credits,alternative_titles,keywords,external_ids,release_dates,reviews,recommendations,similar,content_ratings`;
+    const url = `${baseUrl}/movie/${id}?api_key=${apiKey}&language=en-US&include_image_language=en,null&append_to_response=images,videos,credits,alternative_titles,keywords,external_ids,release_dates,reviews,recommendations,similar,content_ratings,providers`;
 
     try {
         const res = await fetch(url);
@@ -16,6 +28,10 @@ export const getMovieDetails = async (id) => {
     return null;
 }
 
+export const getWatchProviders = (id) => {
+    const watchProvidersUrl = `${baseUrl}/movie/${id}/watch/providers?api_key=${apiKey}`;
+    return getHttpResult(watchProvidersUrl);
+}
 
 export const genres = {
     "genres": [

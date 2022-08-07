@@ -1,16 +1,31 @@
 .chip {
   font-size: 2rem;
-  font-family: var(--font-body);
+  // font-family: var(--font-body);
   // border: 3px solid --color-accent;
   padding: 1rem 1.7rem;
-  color: var(--color-accent);
-  background-color: rgb(var(--color-accent-rgb), .2);
+  // color: var(--color-accent);
+  background-color: #ddd; // rgb(var(--color-accent-rgb), .2);
   margin-right: 2rem;
   text-transform: uppercase;
   display: inline-block;
   margin-bottom: 1.5rem;
 
-//   @include backgroundcolor(red, .2);
+  //   @include backgroundcolor(red, .2);
+  & > :first-child {
+    margin-right: 1rem;
+  }
+}
+
+.rating-chip {
+  font-family: var(--font-head);
+  background-color: rgb(#ffa534, 0.2);
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: 3rem;
+  line-height: 2rem;
+  i {
+    color: #ffa534;
+  }
 }
 
 .play-video-button {
@@ -19,8 +34,9 @@
   cursor: pointer;
   border: none;
   transition: all 0.3s;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: var(--color-accent);
+  font-weight: bold;
 
   &__icon {
     font-size: 5rem;
@@ -34,7 +50,7 @@
 
   &:hover:not(:disabled) {
     color: var(--color-accent-shade);
-    letter-spacing: 1px;
+    letter-spacing: 2px;
   }
   &:hover:not(:disabled) &__icon {
     margin-right: 1.5rem;

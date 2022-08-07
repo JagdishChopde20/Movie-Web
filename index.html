@@ -36,16 +36,41 @@
                         Movie Name
                     </h2>
                     <div class="chips margin-top-medium">
-                        <span class="chip rating">rating</span>
-                        <span class="chip language">language</span>
-                        <span class="chip status">status</span>
-                        <span class="chip runtime">runtime</span>
+                        <span class="chip rating-chip">
+                            <i class="fas fa-star"></i>
+                            <span class="rating"></span>
+                        </span>
+                        <span class="chip">
+                            <i class="fas fa-language"></i>
+                            <span class="language"></span>
+                        </span>
+                        <span class="chip">
+                            <i class="fas fa-calendar-check"></i>
+                            <span class="status"></span>
+                        </span>
+                        <span class="chip">
+                            <i class="fas fa-clock"></i>
+                            <span class="runtime"></span>
+                        </span>
                     </div>
 
-                    <button class="play-video-button margin-top-medium">
-                        <i class="fas fa-play play-video-button__icon"></i>
-                        <span class="play-video-button__text">Play Trailer</span>
-                    </button>
+                    <div class="action-buttons">
+                        <button class="play-video-button margin-top-medium">
+                            <i class="fas fa-play play-video-button__icon"></i>
+                            <span class="play-video-button__text">Play Trailer</span>
+                        </button>
+                        <button class="play-video-button margin-top-medium">
+                            <i class="fas fa-images play-video-button__icon"></i>
+                            <span class="play-video-button__text">View Images</span>
+                        </button>
+                    </div>
+
+                    <div class="watchproviders margin-top-large">
+                        <h2 class="watchproviders--label">Streaming on</h2>
+                        <div class="watchproviders--items margin-top-small">
+                            <!-- items from js -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -72,7 +97,7 @@
             <div class="casts__content">
                 <h2 class="section-title">Casts</h2>
                 <div class="casts__content--items item-small-grid">
-                   <!-- items from js --> 
+                    <!-- items from js -->
                 </div>
             </div>
         </section>
@@ -84,8 +109,7 @@
     <div class="video-container">
         <button id="btnCloseVideoPopup" title="Close"><i class="fas fa-times"></i></button>
         <div class="video-content">
-            <iframe id="iframe-video" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe id="iframe-video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 

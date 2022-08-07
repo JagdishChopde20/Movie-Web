@@ -1,6 +1,6 @@
 // @ts-check
 
-import { hexToRgb, themeColors } from "./globals";
+import { themeColors, getFullLanguageName } from "./globals";
 
 // Set Random Accent Color
 const themeColor = themeColors[Math.floor(Math.random() * themeColors.length)];
@@ -16,7 +16,7 @@ r.style.setProperty('--color-accent-shade', themeColor.colorShade);
 r.style.setProperty('--color-accent-tint', themeColor.colorTint);
 
 
-import { getMovieDetails, genres } from "./api-movie";
+import { getMovieDetails, genres, getWatchProviders } from "./api";
 import { signup } from "./popups/sign-up-in";
 
 // GENRES IMAGES
@@ -43,10 +43,12 @@ import ImgWestern from "../assets/genres-icons/Western.png";
 const baseImgUrl = 'https://image.tmdb.org/t/p/';
 const poster_baseurl = baseImgUrl + 'w780';
 const backdrop_baseurl = baseImgUrl + 'w1280';
+const logo_baseurl = baseImgUrl + 'w300';
 
 const ids = ['261392', '616037', '438148', '507086', '361743', '725201', '718789', '453395', '756999', '854467', '919355', '634649', '759175', '728366', '924482', '961484', '629015', '836225', '675353', '626735', '894169'];
 const id = ids[Math.floor(Math.random() * ids.length)];
 
+// Get Movie Details
 getMovieDetails(id).then(data => {
     try {
         console.log(data);
@@ -79,7 +81,7 @@ getMovieDetails(id).then(data => {
 
         // Set Language
         const language = document.querySelector('.language');
-        language.textContent = data.original_language.toUpperCase();
+        language.textContent = getFullLanguageName(data.original_language).toUpperCase();
 
         // Set Status
         const status = document.querySelector('.status');
@@ -236,6 +238,29 @@ getMovieDetails(id).then(data => {
     }
 });
 
+// Get Watch Providers
+getWatchProviders(id).then(data => {
+    console.log(data, data?.results?.IN?.flatrate?.length > 0);
+    if (data?.results?.IN?.flatrate?.length > 0) {
+        console.log(data?.results?.IN?.flatrate);
+        const dataWatchproviders = data?.results?.IN?.flatrate;
+        // Set Genres
+        const watchproviders = document.querySelector('.watchproviders--items') as HTMLElement;
+        dataWatchproviders.forEach(element => {
+            let watchproviderImg = logo_baseurl + element.logo_path;
+
+            const itemHTML = `  <a href="${data?.results?.IN?.link}" target="_blank" class="watchprovider">
+                                    <img class="watchprovider__icon" src="${watchproviderImg}" alt="${element.provider_name}">
+                                    <figcaption class="watchprovider__text"> ${element.provider_name} </figcaption>
+                                </a>`;
+            watchproviders.insertAdjacentHTML('beforeend', itemHTML);
+        });
+    } else {
+        // Hide Watch Providers section
+        const watchproviders = document.querySelector('.watchproviders') as HTMLElement;
+        watchproviders.style.display = 'none';
+    }
+});
 
 
 // VIDEO POPUP OPEN / CLSOE LOGIC
