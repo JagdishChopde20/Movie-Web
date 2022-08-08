@@ -79,6 +79,26 @@ getMovieDetails(id).then(data => {
         const rating = document.querySelector('.rating');
         rating.textContent = data.vote_average.toFixed(1);
 
+        // Set Rating Progress Bar Value & Color
+        const ratingBar = document.querySelector('.rating-chip') as HTMLElement;
+        ratingBar.style.width = data.vote_average.toFixed(1) * 10 + '%';
+
+        let rateColor = '';
+        if (data.vote_average > 8) {
+            rateColor = '#23a456';
+        } else if (data.vote_average > 7) {
+            rateColor = '#28ba62';
+        } else if (data.vote_average > 6) {
+            rateColor = '#3ec172';
+        } else if (data.vote_average > 5) {
+            rateColor = '#ff7426';
+        } else if (data.vote_average > 4) {
+            rateColor = '#eb445a';
+        } else {
+            rateColor = '#cf3c4f';
+        }
+        ratingBar.style.backgroundColor = rateColor;
+
         // Set Language
         const language = document.querySelector('.language');
         language.textContent = getFullLanguageName(data.original_language).toUpperCase();
@@ -90,6 +110,10 @@ getMovieDetails(id).then(data => {
         // Set Runtime
         const runtime = document.querySelector('.runtime');
         runtime.textContent = data.runtime + (data.runtime ? ' MINS' : '');
+
+        // Set Votes
+        const votes = document.querySelector('.votes');
+        votes.textContent = data.vote_count;
 
         // Set Trailer
         if (data.videos?.results?.length > 0) {
@@ -115,6 +139,14 @@ getMovieDetails(id).then(data => {
             // Set No Trailer Available
             const playBtnText = document.querySelector('.play-video-button__text');
             playBtnText.textContent = 'Trailer Not Available';
+        }
+
+        // Set Homepage
+        const homepage = document.querySelector('.a-homepage') as HTMLElement;
+        if (!data.homepage || data.homepage == '') {
+            homepage.disabled = true;
+        } else {
+            homepage.addEventListener('click', () => window.open(data.homepage, '_blank'));
         }
 
         // Set Genres
@@ -200,7 +232,7 @@ getMovieDetails(id).then(data => {
         storyline.textContent = data.overview;
 
 
-        // Set Cast 4
+        // Set Casts
         if (data.credits && data.credits.cast && data.credits.cast.length > 0) {
             let castsToShow = [];
             if (data.credits.cast.length > 8) {
@@ -223,7 +255,7 @@ getMovieDetails(id).then(data => {
             });
 
             if (data.credits.cast.length > 8) {
-                const viewAllHTML = `<div class="view-all-casts">
+                const viewAllHTML = `<div class="view-all-card">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>`;
                 casts.insertAdjacentHTML('beforeend', viewAllHTML);
@@ -233,6 +265,165 @@ getMovieDetails(id).then(data => {
             const casts_section = document.querySelector('.casts') as HTMLElement;
             casts_section.style.display = 'none';
         }
+
+
+        // Set Posters
+        if (data.images && data.images.posters && data.images.posters.length > 0) {
+            let postersToShow = [];
+            if (data.images.posters.length > 8) {
+                postersToShow = data.images.posters.slice(0, 7);
+            } else {
+                postersToShow = data.images.posters.slice(0, 8);
+            }
+
+            const posters = document.querySelector('.posters__content--items');
+            postersToShow.forEach(element => {
+                const photoUrl = poster_baseurl + element.file_path;
+                const itemHTML = `  <figure class="poster">
+                                        <img class="poster__photo" src="${photoUrl}" alt="Poster of Movie">
+                                    </figure>`;
+                posters.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            if (data.images.posters.length > 8) {
+                const viewAllHTML = `<div class="view-all-card">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                posters.insertAdjacentHTML('beforeend', viewAllHTML);
+            }
+        } else {
+            // Hide Section
+            const posters_section = document.querySelector('.posters') as HTMLElement;
+            posters_section.style.display = 'none';
+        }
+
+
+        // Set Backdrops
+        if (data.images && data.images.backdrops && data.images.backdrops.length > 0) {
+            let backdropsToShow = [];
+            if (data.images.backdrops.length > 9) {
+                backdropsToShow = data.images.backdrops.slice(0, 8);
+            } else {
+                backdropsToShow = data.images.backdrops.slice(0, 9);
+            }
+
+            const backdrops = document.querySelector('.backdrops__content--items');
+            backdropsToShow.forEach(element => {
+                const photoUrl = poster_baseurl + element.file_path;
+                const itemHTML = `  <figure class="backdrop">
+                                        <img class="backdrop__photo" src="${photoUrl}" alt="Backdrop of Movie">
+                                    </figure>`;
+                backdrops.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            if (data.images.backdrops.length > 9) {
+                const viewAllHTML = `<div class="view-all-card">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                backdrops.insertAdjacentHTML('beforeend', viewAllHTML);
+            }
+        } else {
+            // Hide Section
+            const backdrops_section = document.querySelector('.backdrops') as HTMLElement;
+            backdrops_section.style.display = 'none';
+        }
+
+
+        // Set Belongs to Collection
+        const backdrops_section = document.querySelector('.b2collection') as HTMLElement;
+        if (data.belongs_to_collection && data.belongs_to_collection?.poster_path) {
+            // Set Name
+            const b2collectionName = document.querySelector('.b2collection-name') as HTMLElement;
+            b2collectionName.textContent = data.belongs_to_collection?.name;
+
+            // Set Poster
+            const poster = document.querySelector('.b2collection-poster');
+            poster.src = poster_baseurl + data.belongs_to_collection?.poster_path;
+
+            // Set Background
+            backdrops_section.style.backgroundImage = `url(${backdrop_baseurl + data.belongs_to_collection.backdrop_path})`;
+        } else {
+            // Hide Section
+            backdrops_section.style.display = 'none';
+        }
+
+
+        // Set Similar Movies
+        if (data.similar && data.similar?.results && data.similar?.results?.length > 0) {
+            let moviesToShow = [];
+            if (data.similar.results.length > 8) {
+                moviesToShow = data.similar.results.slice(0, 7);
+            } else {
+                moviesToShow = data.similar.results.slice(0, 8);
+            }
+
+            const similarMovies = document.querySelector('.similar-movies');
+            moviesToShow.forEach(element => {
+                const posterUrl = poster_baseurl + element.poster_path;
+                const itemHTML = `  <figure class="movie">
+                                        <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                                        <figcaption class="movie__text">
+                                            <h4 class="movie-name">${element.title}</h4>
+                                            <p class="text-as">${element.release_date}</p>
+                                            <div class="rating-chip">
+                                                <i class="fas fa-star"></i>
+                                                <span class="rating">${element.vote_average.toFixed(1)}</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>`;
+                similarMovies.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            if (data.similar.results.length > 8) {
+                const viewAllHTML = `<div class="view-all-card">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                similarMovies.insertAdjacentHTML('beforeend', viewAllHTML);
+            }
+        } else {
+            // Hide Section
+            const similar_movies_section = document.querySelector('.similar-movies-section') as HTMLElement;
+            similar_movies_section.style.display = 'none';
+        }
+
+        // Set Recommendations Movies
+        if (data.recommendations && data.recommendations?.results && data.recommendations?.results?.length > 0) {
+            let moviesToShow = [];
+            if (data.recommendations.results.length > 8) {
+                moviesToShow = data.recommendations.results.slice(0, 7);
+            } else {
+                moviesToShow = data.recommendations.results.slice(0, 8);
+            }
+
+            const recommendationsMovies = document.querySelector('.recommendations-movies');
+            moviesToShow.forEach(element => {
+                const posterUrl = poster_baseurl + element.poster_path;
+                const itemHTML = `  <figure class="movie">
+                                        <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                                        <figcaption class="movie__text">
+                                            <h4 class="movie-name">${element.title}</h4>
+                                            <p class="text-as">${element.release_date}</p>
+                                            <div class="rating-chip">
+                                                <i class="fas fa-star"></i>
+                                                <span class="rating">${element.vote_average.toFixed(1)}</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>`;
+                recommendationsMovies.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            if (data.recommendations.results.length > 8) {
+                const viewAllHTML = `<div class="view-all-card">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                recommendationsMovies.insertAdjacentHTML('beforeend', viewAllHTML);
+            }
+        } else {
+            // Hide Section
+            const recommendations_movies_section = document.querySelector('.recommendations-movies-section') as HTMLElement;
+            recommendations_movies_section.style.display = 'none';
+        }
+
     } catch (error) {
         console.error(error);
     }
@@ -240,9 +431,7 @@ getMovieDetails(id).then(data => {
 
 // Get Watch Providers
 getWatchProviders(id).then(data => {
-    console.log(data, data?.results?.IN?.flatrate?.length > 0);
     if (data?.results?.IN?.flatrate?.length > 0) {
-        console.log(data?.results?.IN?.flatrate);
         const dataWatchproviders = data?.results?.IN?.flatrate;
         // Set Genres
         const watchproviders = document.querySelector('.watchproviders--items') as HTMLElement;

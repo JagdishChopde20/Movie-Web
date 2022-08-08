@@ -19,6 +19,7 @@
 <body>
 
     <main class="container">
+        <!-- Section Hero -->
         <section class="hero">
             <div class="tagline">
                 <img class="img-movie-title">
@@ -26,6 +27,7 @@
             </div>
         </section>
 
+        <!-- Section Overview -->
         <section class="overview section-grid section-padding">
             <div class="overview__content overview-grid">
                 <div class="overview__content--poster">
@@ -35,11 +37,13 @@
                     <h2 class="movie-title">
                         Movie Name
                     </h2>
-                    <div class="chips margin-top-medium">
-                        <span class="chip rating-chip">
+                    <div class="rating-bar margin-top-medium">
+                        <div class="rating-chip">
                             <i class="fas fa-star"></i>
                             <span class="rating"></span>
-                        </span>
+                        </div>
+                    </div>
+                    <div class="chips">
                         <span class="chip">
                             <i class="fas fa-language"></i>
                             <span class="language"></span>
@@ -52,16 +56,24 @@
                             <i class="fas fa-clock"></i>
                             <span class="runtime"></span>
                         </span>
+                        <span class="chip">
+                            <i class="fas fa-heart"></i>
+                            <span class="votes">0</span>
+                        </span>
                     </div>
 
                     <div class="action-buttons">
-                        <button class="play-video-button margin-top-medium">
-                            <i class="fas fa-play play-video-button__icon"></i>
-                            <span class="play-video-button__text">Play Trailer</span>
+                        <button class="cta play-video-button margin-top-medium">
+                            <i class="fas fa-play cta__icon"></i>
+                            <span class="cta__text">Play Trailer</span>
                         </button>
-                        <button class="play-video-button margin-top-medium">
-                            <i class="fas fa-images play-video-button__icon"></i>
-                            <span class="play-video-button__text">View Images</span>
+                        <button class="cta margin-top-medium">
+                            <i class="fas fa-images cta__icon"></i>
+                            <span class="cta__text">View Images</span>
+                        </button>
+                        <button class="cta a-homepage margin-top-medium">
+                            <i class="fas fa-globe cta__icon"></i>
+                            <span class="cta__text">Homepage</span>
                         </button>
                     </div>
 
@@ -75,6 +87,7 @@
             </div>
         </section>
 
+        <!-- Section Genres -->
         <section class="genres section-grid section-padding">
             <div class="genres__content">
                 <h2 class="section-title">Movie Genres</h2>
@@ -84,6 +97,7 @@
             </div>
         </section>
 
+        <!-- Section Storyline -->
         <section class="storyline section-grid section-padding">
             <div class="storyline__content">
                 <h2 class="section-title">Storyline</h2>
@@ -93,6 +107,7 @@
             </div>
         </section>
 
+        <!-- Section Casts -->
         <section class="casts section-grid section-padding">
             <div class="casts__content">
                 <h2 class="section-title">Casts</h2>
@@ -101,6 +116,66 @@
                 </div>
             </div>
         </section>
+
+        <!-- Section Posters -->
+        <section class="posters section-grid section-padding">
+            <div class="posters__content">
+                <h2 class="section-title">Posters</h2>
+                <div class="posters__content--items item-small-grid">
+                    <!-- items from js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Backdrops -->
+        <section class="backdrops section-grid section-padding">
+            <div class="backdrops__content">
+                <h2 class="section-title">Backdrops</h2>
+                <div class="backdrops__content--items item-grid">
+                    <!-- items from js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Belongs to Collection -->
+        <section class="b2collection section-grid section-padding">
+            <div class="b2collection__content overview-grid">
+                <div class="b2collection__content--poster">
+                    <img class="b2collection-poster">
+                </div>
+                <div class="b2collection__content--details">
+                    <p>BELONGS TO</p>
+                    <h2 class="section-title b2collection-name">
+                        Belongs to Collection
+                    </h2>
+                    <button class="cta margin-top-medium">
+                        <i class="fas fa-play cta__icon"></i>
+                        <span class="cta__text">Visit Collection</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Similar -->
+        <section class="similar-movies-section movies section-grid section-padding">
+            <div class="movies__content">
+                <h2 class="section-title">Simillar Movies</h2>
+                <div class="similar-movies movies__content--items item-small-grid">
+                    <!-- items from js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Recommendations -->
+        <section class="recommendations-movies-section movies section-grid section-padding">
+            <div class="movies__content">
+                <h2 class="section-title">Recommendations Movies</h2>
+                <div class="recommendations-movies movies__content--items item-small-grid">
+                    <!-- items from js -->
+                </div>
+            </div>
+        </section>
+
     </main>
 
 

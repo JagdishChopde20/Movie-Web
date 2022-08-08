@@ -49,13 +49,16 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
       }
 
       .action-buttons {
         display: flex;
-        & >:not(:last-child) {
-          width: 30rem;
-        }
+        justify-content: space-between;
+        align-items: center;
+        // & >:not(:last-child) {
+        //   width: 30rem;
+        // }
       }
 
       .watchproviders {
@@ -108,8 +111,6 @@
 }
 
 .genres {
-  padding-top: 0;
-
   &__content {
     grid-column: content-start / content-end;
 
@@ -144,6 +145,7 @@
 }
 
 .storyline {
+  padding-bottom: 10rem;
   // background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
   //   url("https://image.tmdb.org/t/p/w1280/ocUp7DJBIc8VJgLEw1prcyK1dYv.jpg");
   background-repeat: no-repeat;
@@ -168,6 +170,8 @@
 }
 
 .casts {
+  padding-top: 17rem;
+
   &__content {
     grid-column: content-start / content-end;
 
@@ -207,25 +211,182 @@
           }
         }
       }
-
-      .view-all-casts {
-        color: var(--color-light);
-        background-color: #ddd;
+      .view-all-card {
         margin-bottom: 130px;
+      }
+    }
+  }
+}
+
+.view-all-card {
+  color: var(--color-light);
+  background-color: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20rem;
+  cursor: pointer;
+  transition: all 0.5s;
+  margin-bottom: 6rem;
+
+  &:hover {
+    background-color: #fff;
+    color: rgba(var(--color-accent-rgb), 1);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.posters {
+  &__content {
+    grid-column: content-start / content-end;
+
+    &--items {
+      .poster {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 20rem;
-        cursor: pointer;
-        transition: all 0.5s;
+        margin-bottom: 6rem;
 
-        &:hover {
-          background-color: #fff;
-          color: rgba(var(--color-accent-rgb), 1);
+        &__photo {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          background-color: #ddd;
+          cursor: pointer;
+          transition: all 0.5s;
+
+          &:hover {
+            filter: contrast(110%) brightness(110%);
+          }
+          &:active {
+            transform: scale(0.95);
+          }
         }
-        &:active {
-          transform: scale(0.95);
+      }
+    }
+  }
+}
+
+.backdrops {
+  &__content {
+    grid-column: content-start / content-end;
+
+    &--items {
+      .backdrop {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 6rem;
+
+        &__photo {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          background-color: #ddd;
+          cursor: pointer;
+          transition: all 0.5s;
+
+          &:hover {
+            filter: contrast(110%) brightness(110%);
+          }
+          &:active {
+            transform: scale(0.95);
+          }
         }
+      }
+    }
+  }
+}
+
+.b2collection {
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+    url("https://image.tmdb.org/t/p/w1280/ocUp7DJBIc8VJgLEw1prcyK1dYv.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: var(--color-accent-shade);
+  background-blend-mode: overlay;
+  background-position: center;
+
+  &__content {
+    grid-column: content-start / content-end;
+    padding: 6rem 10rem;
+    background-color: rgba(#000, 0.8);
+
+    &--poster {
+      .b2collection-poster {
+        width: 100%;
+      }
+    }
+
+    &--details {
+      color: var(--color-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        font-weight: bold;
+        color: var(--color-accent);
+        line-height: 5rem;
+      }
+    }
+  }
+}
+
+.movies {
+  &__content {
+    grid-column: content-start / content-end;
+
+    &--items {
+      .movie {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 6rem;
+
+        &__poster {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          background-color: #ddd;
+          cursor: pointer;
+          transition: all 0.5s;
+
+          &:hover {
+            filter: contrast(120%) brightness(120%);
+          }
+          &:active {
+            transform: scale(0.95);
+          }
+        }
+        &__text {
+          font-size: 2rem;
+          font-family: var(--font-body);
+          margin-top: 2rem;
+          text-align: center;
+
+          .text-as {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+            color: rgba(var(--color-text), 0.8);
+          }
+
+          .rating-chip {
+            margin-top: 1rem;
+            color: orange;
+          }
+        }
+      }
+      .view-all-card {
+        margin-bottom: 130px;
       }
     }
   }
