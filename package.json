@@ -4,12 +4,17 @@
   "description": "",
   "main": "js/index.js",
   "scripts": {
+    "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jagdish Chopde",
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.7.0",
-    "parcel": "^2.7.0"
+    "parcel": "^2.7.0",
+    "parcel-bundler": "^1.12.5"
+  },
+  "dependencies": {
+    "firebase": "^9.9.2"
   }
 }
