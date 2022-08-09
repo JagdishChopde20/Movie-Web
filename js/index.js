@@ -1,4 +1,3 @@
-// @ts-check
 
 import { themeColors, getFullLanguageName } from "./globals";
 
@@ -46,19 +45,35 @@ const backdrop_baseurl = baseImgUrl + 'w1280';
 const logo_baseurl = baseImgUrl + 'w300';
 
 const ids = ['261392', '616037', '438148', '507086', '361743', '725201', '718789', '453395', '756999', '854467', '919355', '634649', '759175', '728366', '924482', '961484', '629015', '836225', '675353', '626735', '894169'];
-const id = ids[Math.floor(Math.random() * ids.length)];
+let id = '';
 
-// Get Movie Details
-getMovieDetails(id).then(data => {
-    try {
+const windowOnload = () => {
+    const urlParams = new URLSearchParams(location.search);
+    if (urlParams.has('id')) {
+        id = urlParams.get('id');
+    } else {
+        id = ids[Math.floor(Math.random() * ids.length)];
+    }
+
+    if (!id || id == '') {
+        alert('Unable to get movie details.');
+        return;
+    }
+    // Get Movie Details
+    getMovieDetails(id).then(data => {
+        //try {
         console.log(data);
+        if (data?.success === false) {
+            alert(data.status_message);
+            return;
+        }
 
         // Set Backdrop
         const hero = document.querySelector('.hero');
         hero.style.backgroundImage = `url(${backdrop_baseurl + data.backdrop_path})`;
 
         // Set Tagline
-        const tagline = document.querySelector('.tagline__text') as HTMLElement;
+        const tagline = document.querySelector('.tagline__text');
         tagline.textContent = data.tagline;
 
         // Set Poster
@@ -80,7 +95,7 @@ getMovieDetails(id).then(data => {
         rating.textContent = data.vote_average.toFixed(1);
 
         // Set Rating Progress Bar Value & Color
-        const ratingBar = document.querySelector('.rating-chip') as HTMLElement;
+        const ratingBar = document.querySelector('.rating-chip');
         ratingBar.style.width = data.vote_average.toFixed(1) * 10 + '%';
 
         let rateColor = '';
@@ -125,7 +140,7 @@ getMovieDetails(id).then(data => {
                 videoiframe.src = trailer_path;
             } else {
                 // Disable video button
-                const playBtn = document.querySelector('.play-video-button') as HTMLElement;
+                const playBtn = document.querySelector('.play-video-button');
                 playBtn.disabled = true;
                 // Set No Trailer Available
                 const playBtnText = document.querySelector('.play-video-button__text');
@@ -134,7 +149,7 @@ getMovieDetails(id).then(data => {
 
         } else {
             // Disable video button
-            const playBtn = document.querySelector('.play-video-button') as HTMLElement;
+            const playBtn = document.querySelector('.play-video-button');
             playBtn.disabled = true;
             // Set No Trailer Available
             const playBtnText = document.querySelector('.play-video-button__text');
@@ -142,7 +157,7 @@ getMovieDetails(id).then(data => {
         }
 
         // Set Homepage
-        const homepage = document.querySelector('.a-homepage') as HTMLElement;
+        const homepage = document.querySelector('.a-homepage');
         if (!data.homepage || data.homepage == '') {
             homepage.disabled = true;
         } else {
@@ -262,7 +277,7 @@ getMovieDetails(id).then(data => {
             }
         } else {
             // Hide Casts Section
-            const casts_section = document.querySelector('.casts') as HTMLElement;
+            const casts_section = document.querySelector('.casts');
             casts_section.style.display = 'none';
         }
 
@@ -293,7 +308,7 @@ getMovieDetails(id).then(data => {
             }
         } else {
             // Hide Section
-            const posters_section = document.querySelector('.posters') as HTMLElement;
+            const posters_section = document.querySelector('.posters');
             posters_section.style.display = 'none';
         }
 
@@ -324,16 +339,16 @@ getMovieDetails(id).then(data => {
             }
         } else {
             // Hide Section
-            const backdrops_section = document.querySelector('.backdrops') as HTMLElement;
+            const backdrops_section = document.querySelector('.backdrops');
             backdrops_section.style.display = 'none';
         }
 
 
         // Set Belongs to Collection
-        const backdrops_section = document.querySelector('.b2collection') as HTMLElement;
+        const backdrops_section = document.querySelector('.b2collection');
         if (data.belongs_to_collection && data.belongs_to_collection?.poster_path) {
             // Set Name
-            const b2collectionName = document.querySelector('.b2collection-name') as HTMLElement;
+            const b2collectionName = document.querySelector('.b2collection-name');
             b2collectionName.textContent = data.belongs_to_collection?.name;
 
             // Set Poster
@@ -360,17 +375,19 @@ getMovieDetails(id).then(data => {
             const similarMovies = document.querySelector('.similar-movies');
             moviesToShow.forEach(element => {
                 const posterUrl = poster_baseurl + element.poster_path;
-                const itemHTML = `  <figure class="movie">
-                                        <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
-                                        <figcaption class="movie__text">
-                                            <h4 class="movie-name">${element.title}</h4>
-                                            <p class="text-as">${element.release_date}</p>
-                                            <div class="rating-chip">
-                                                <i class="fas fa-star"></i>
-                                                <span class="rating">${element.vote_average.toFixed(1)}</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>`;
+                const itemHTML = `  <a class="a-movie" href="?id=${element.id}">
+                                        <figure class="movie">
+                                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                                            <figcaption class="movie__text">
+                                                <h4 class="movie-name">${element.title}</h4>
+                                                <p class="text-as">${element.release_date}</p>
+                                                <div class="rating-chip">
+                                                    <i class="fas fa-star"></i>
+                                                    <span class="rating">${element.vote_average.toFixed(1)}</span>
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </a>`;
                 similarMovies.insertAdjacentHTML('beforeend', itemHTML);
             });
 
@@ -382,7 +399,7 @@ getMovieDetails(id).then(data => {
             }
         } else {
             // Hide Section
-            const similar_movies_section = document.querySelector('.similar-movies-section') as HTMLElement;
+            const similar_movies_section = document.querySelector('.similar-movies-section');
             similar_movies_section.style.display = 'none';
         }
 
@@ -398,17 +415,19 @@ getMovieDetails(id).then(data => {
             const recommendationsMovies = document.querySelector('.recommendations-movies');
             moviesToShow.forEach(element => {
                 const posterUrl = poster_baseurl + element.poster_path;
-                const itemHTML = `  <figure class="movie">
-                                        <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
-                                        <figcaption class="movie__text">
-                                            <h4 class="movie-name">${element.title}</h4>
-                                            <p class="text-as">${element.release_date}</p>
-                                            <div class="rating-chip">
-                                                <i class="fas fa-star"></i>
-                                                <span class="rating">${element.vote_average.toFixed(1)}</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>`;
+                const itemHTML = `  <a class="a-movie" href="?id=${element.id}">
+                                        <figure class="movie">
+                                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                                            <figcaption class="movie__text">
+                                                <h4 class="movie-name">${element.title}</h4>
+                                                <p class="text-as">${element.release_date}</p>
+                                                <div class="rating-chip">
+                                                    <i class="fas fa-star"></i>
+                                                    <span class="rating">${element.vote_average.toFixed(1)}</span>
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </a>`;
                 recommendationsMovies.insertAdjacentHTML('beforeend', itemHTML);
             });
 
@@ -420,36 +439,41 @@ getMovieDetails(id).then(data => {
             }
         } else {
             // Hide Section
-            const recommendations_movies_section = document.querySelector('.recommendations-movies-section') as HTMLElement;
+            const recommendations_movies_section = document.querySelector('.recommendations-movies-section');
             recommendations_movies_section.style.display = 'none';
         }
 
-    } catch (error) {
-        console.error(error);
-    }
-});
+        // } catch (error) {
+        //     console.error(error);
+        // }
+    });
 
-// Get Watch Providers
-getWatchProviders(id).then(data => {
-    if (data?.results?.IN?.flatrate?.length > 0) {
-        const dataWatchproviders = data?.results?.IN?.flatrate;
-        // Set Genres
-        const watchproviders = document.querySelector('.watchproviders--items') as HTMLElement;
-        dataWatchproviders.forEach(element => {
-            let watchproviderImg = logo_baseurl + element.logo_path;
+    // Get Watch Providers
+    getWatchProviders(id).then(data => {
+        if (data?.results?.IN?.flatrate?.length > 0) {
+            const dataWatchproviders = data?.results?.IN?.flatrate;
+            // Set Genres
+            const watchproviders = document.querySelector('.watchproviders--items');
+            dataWatchproviders.forEach(element => {
+                let watchproviderImg = logo_baseurl + element.logo_path;
 
-            const itemHTML = `  <a href="${data?.results?.IN?.link}" target="_blank" class="watchprovider">
+                const itemHTML = `  <a href="${data?.results?.IN?.link}" target="_blank" class="watchprovider">
                                     <img class="watchprovider__icon" src="${watchproviderImg}" alt="${element.provider_name}">
                                     <figcaption class="watchprovider__text"> ${element.provider_name} </figcaption>
                                 </a>`;
-            watchproviders.insertAdjacentHTML('beforeend', itemHTML);
-        });
-    } else {
-        // Hide Watch Providers section
-        const watchproviders = document.querySelector('.watchproviders') as HTMLElement;
-        watchproviders.style.display = 'none';
-    }
-});
+                watchproviders.insertAdjacentHTML('beforeend', itemHTML);
+            });
+        } else {
+            // Hide Watch Providers section
+            const watchproviders = document.querySelector('.watchproviders');
+            watchproviders.style.display = 'none';
+        }
+    });
+}
+console.log(id);
+window.onload = windowOnload;
+
+
 
 
 // VIDEO POPUP OPEN / CLSOE LOGIC
