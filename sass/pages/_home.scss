@@ -41,7 +41,7 @@
       padding: 1rem 0;
 
       .movie-title {
-        font-size: 5rem;
+        font-size: 4.5rem;
         font-family: var(--font-head);
       }
 
@@ -132,10 +132,10 @@
         }
 
         &__icon {
-          width: 20rem;
+          width: 10rem;
         }
         &__text {
-          font-size: 2rem;
+          font-size: 1.5rem;
           font-family: var(--font-body);
           margin-top: 2rem;
         }
@@ -161,9 +161,9 @@
 
     &--items {
       text-align: justify;
-      font-size: 3rem;
+      font-size: 2rem;
       font-family: var(--font-body);
-      line-height: 4.5rem;
+      line-height: 4rem;
     }
   }
 }
@@ -180,7 +180,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 6rem;
+        margin-bottom: 1rem;
 
         &__photo {
           width: 100%;
@@ -198,20 +198,20 @@
           }
         }
         &__text {
-          font-size: 2rem;
+          font-size: 1.6rem;
           font-family: var(--font-body);
           margin-top: 2rem;
           text-align: center;
 
           .cast-as {
             margin-top: 1rem;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: rgba(var(--color-text), 0.8);
           }
         }
       }
       .view-all-card {
-        margin-bottom: 130px;
+        margin-bottom: 7.3rem;
       }
     }
   }
@@ -226,7 +226,7 @@
   font-size: 20rem;
   cursor: pointer;
   transition: all 0.5s;
-  margin-bottom: 6rem;
+  // margin-bottom: 1rem;
 
   &:hover {
     background-color: #fff;
@@ -247,7 +247,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 6rem;
+        margin-bottom: 1rem;
 
         &__photo {
           width: 100%;
@@ -265,6 +265,9 @@
           }
         }
       }
+      .view-all-card {
+        margin-bottom: 1rem;
+      }
     }
   }
 }
@@ -279,7 +282,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 6rem;
+        margin-bottom: 1rem;
 
         &__photo {
           width: 100%;
@@ -296,6 +299,9 @@
             transform: scale(0.95);
           }
         }
+      }
+      .view-all-card {
+        margin-bottom: 1rem;
       }
     }
   }
@@ -351,7 +357,7 @@
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          margin-bottom: 6rem;
+          margin-bottom: 1rem;
 
           &__poster {
             width: 100%;
@@ -369,14 +375,14 @@
             }
           }
           &__text {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-family: var(--font-body);
             margin-top: 2rem;
             text-align: center;
 
             .text-as {
               margin-top: 1rem;
-              font-size: 1.5rem;
+              font-size: 1.3rem;
               color: rgba(var(--color-text), 0.8);
             }
 
@@ -386,9 +392,9 @@
             }
           }
         }
-        .view-all-card {
-          margin-bottom: 130px;
-        }
+      }
+      .view-all-card {
+        margin-bottom: 10rem;
       }
     }
   }

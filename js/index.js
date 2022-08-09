@@ -72,19 +72,26 @@ const windowOnload = () => {
         const hero = document.querySelector('.hero');
         hero.style.backgroundImage = `url(${backdrop_baseurl + data.backdrop_path})`;
 
-        // Set Tagline
-        const tagline = document.querySelector('.tagline__text');
-        tagline.textContent = data.tagline;
+        // If Tagline and Movie Title Image both null then set Movie name in Hero section
+        if ((data.tagline || data.tagline == '') || (data.images?.logos[0]?.file_path && data.images?.logos[0]?.file_path == '')) {
+            // Set Movie name in Tagline
+            const tagline = document.querySelector('.tagline__text');
+            tagline.textContent = data.title;
+        } else {
+            // Set Tagline
+            const tagline = document.querySelector('.tagline__text');
+            tagline.textContent = data.tagline;
+
+            // Set Movie Title Image
+            if (data.images?.logos[0]?.file_path) {
+                const imgTitle = document.querySelector('.img-movie-title');
+                imgTitle.src = poster_baseurl + data.images.logos[0].file_path;
+            }
+        }
 
         // Set Poster
         const poster = document.querySelector('.poster');
         poster.src = poster_baseurl + data.poster_path;
-
-        // Set Movie Title Image
-        if (data.images?.logos[0]?.file_path) {
-            const imgTitle = document.querySelector('.img-movie-title');
-            imgTitle.src = poster_baseurl + data.images.logos[0].file_path;
-        }
 
         // Set Title
         const title = document.querySelector('.movie-title');
@@ -240,20 +247,27 @@ const windowOnload = () => {
 
         // Set Storyline Background
         const storyline_container = document.querySelector('.storyline');
-        storyline_container.style.backgroundImage = `url(${backdrop_baseurl + data.images.backdrops[1].file_path})`;
+        if (data.overview) {
+            if (data.images?.backdrops[1]?.file_path) {
+                storyline_container.style.backgroundImage = `url(${backdrop_baseurl + data.images?.backdrops[1]?.file_path})`;
+            }
 
-        // Set Storyline
-        const storyline = document.querySelector('.storyline__content--items');
-        storyline.textContent = data.overview;
+            // Set Storyline
+            const storyline = document.querySelector('.storyline__content--items');
+            storyline.textContent = data.overview;
+        } else {
+            storyline_container.disabled = true;
+        }
+
 
 
         // Set Casts
         if (data.credits && data.credits.cast && data.credits.cast.length > 0) {
             let castsToShow = [];
-            if (data.credits.cast.length > 8) {
-                castsToShow = data.credits.cast.slice(0, 7);
+            if (data.credits.cast.length > 10) {
+                castsToShow = data.credits.cast.slice(0, 9);
             } else {
-                castsToShow = data.credits.cast.slice(0, 8);
+                castsToShow = data.credits.cast.slice(0, 10);
             }
 
             const casts = document.querySelector('.casts__content--items');
@@ -269,7 +283,7 @@ const windowOnload = () => {
                 casts.insertAdjacentHTML('beforeend', itemHTML);
             });
 
-            if (data.credits.cast.length > 8) {
+            if (data.credits.cast.length > 10) {
                 const viewAllHTML = `<div class="view-all-card">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>`;
@@ -285,10 +299,10 @@ const windowOnload = () => {
         // Set Posters
         if (data.images && data.images.posters && data.images.posters.length > 0) {
             let postersToShow = [];
-            if (data.images.posters.length > 8) {
-                postersToShow = data.images.posters.slice(0, 7);
+            if (data.images.posters.length > 10) {
+                postersToShow = data.images.posters.slice(0, 9);
             } else {
-                postersToShow = data.images.posters.slice(0, 8);
+                postersToShow = data.images.posters.slice(0, 10);
             }
 
             const posters = document.querySelector('.posters__content--items');
@@ -300,7 +314,7 @@ const windowOnload = () => {
                 posters.insertAdjacentHTML('beforeend', itemHTML);
             });
 
-            if (data.images.posters.length > 8) {
+            if (data.images.posters.length > 10) {
                 const viewAllHTML = `<div class="view-all-card">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>`;
@@ -366,10 +380,10 @@ const windowOnload = () => {
         // Set Similar Movies
         if (data.similar && data.similar?.results && data.similar?.results?.length > 0) {
             let moviesToShow = [];
-            if (data.similar.results.length > 8) {
-                moviesToShow = data.similar.results.slice(0, 7);
+            if (data.similar.results.length > 10) {
+                moviesToShow = data.similar.results.slice(0, 9);
             } else {
-                moviesToShow = data.similar.results.slice(0, 8);
+                moviesToShow = data.similar.results.slice(0, 10);
             }
 
             const similarMovies = document.querySelector('.similar-movies');
@@ -391,7 +405,7 @@ const windowOnload = () => {
                 similarMovies.insertAdjacentHTML('beforeend', itemHTML);
             });
 
-            if (data.similar.results.length > 8) {
+            if (data.similar.results.length > 10) {
                 const viewAllHTML = `<div class="view-all-card">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>`;
@@ -406,10 +420,10 @@ const windowOnload = () => {
         // Set Recommendations Movies
         if (data.recommendations && data.recommendations?.results && data.recommendations?.results?.length > 0) {
             let moviesToShow = [];
-            if (data.recommendations.results.length > 8) {
-                moviesToShow = data.recommendations.results.slice(0, 7);
+            if (data.recommendations.results.length > 10) {
+                moviesToShow = data.recommendations.results.slice(0, 9);
             } else {
-                moviesToShow = data.recommendations.results.slice(0, 8);
+                moviesToShow = data.recommendations.results.slice(0, 10);
             }
 
             const recommendationsMovies = document.querySelector('.recommendations-movies');
@@ -431,7 +445,7 @@ const windowOnload = () => {
                 recommendationsMovies.insertAdjacentHTML('beforeend', itemHTML);
             });
 
-            if (data.recommendations.results.length > 8) {
+            if (data.recommendations.results.length > 10) {
                 const viewAllHTML = `<div class="view-all-card">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>`;
