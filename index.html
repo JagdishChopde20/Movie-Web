@@ -67,7 +67,7 @@
                             <i class="fas fa-play cta__icon"></i>
                             <span class="cta__text play-video-button__text">Play Trailer</span>
                         </button>
-                        <button class="cta margin-top-medium">
+                        <button class="cta play-slideshow-button margin-top-medium">
                             <i class="fas fa-images cta__icon"></i>
                             <span class="cta__text">View Images</span>
                         </button>
@@ -185,6 +185,23 @@
         <button id="btnCloseVideoPopup" title="Close"><i class="fas fa-times"></i></button>
         <div class="video-content">
             <iframe id="iframe-video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+
+    <div class="slideshow-container">
+        <button id="btnCloseSlideshowPopup" title="Close"><i class="fas fa-times"></i></button>
+        <div class="slideshow-content">
+            <!-- <img src="https://image.tmdb.org/t/p/w780/bi2MCDYvrZQPf1uXyvfVYPE57Mz.jpg" alt="" > -->
+            <img src="https://image.tmdb.org/t/p/w1280/e5OZCzHn9tSaBlJapGytx0unRXC.jpg" alt="">
+
+            <button id="btnPrevisousImage" title="Previous" class="icon-img icon-img--previous">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </button>
+
+            <button id="btnNextImage" title="Next" class="icon-img icon-img--next">
+                <i class="far fa-arrow-alt-circle-right"></i>
+            </button>
         </div>
     </div>
 

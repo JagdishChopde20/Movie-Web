@@ -51,6 +51,8 @@
   color: var(--color-accent);
   font-weight: bold;
   background-color: transparent;
+  outline-offset: 5px;
+  outline-width: 2px;
 
   &__icon {
     font-size: 5rem;
@@ -72,7 +74,14 @@
 
   &:active:not(:disabled) {
     transform: scale(0.95);
+    outline-style: dashed;
   }
+
+  &:focus:not(:disabled) {
+    outline-style: dashed;
+    outline-color: var(--color-accent);
+  }
+
   &:disabled {
     color: #aaa;
     cursor: not-allowed;

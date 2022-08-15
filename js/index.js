@@ -46,6 +46,7 @@ const logo_baseurl = baseImgUrl + 'w300';
 
 const ids = ['261392', '616037', '438148', '507086', '361743', '725201', '718789', '453395', '756999', '854467', '919355', '634649', '759175', '728366', '924482', '961484', '629015', '836225', '675353', '626735', '894169'];
 let id = '';
+let movie;
 
 const windowOnload = () => {
     const urlParams = new URLSearchParams(location.search);
@@ -68,12 +69,14 @@ const windowOnload = () => {
             return;
         }
 
+        movie = data;
+
         // Set Backdrop
         const hero = document.querySelector('.hero');
         hero.style.backgroundImage = `url(${backdrop_baseurl + data.backdrop_path})`;
 
         // If Tagline and Movie Title Image both null then set Movie name in Hero section
-        if ((data.tagline || data.tagline == '') || (data.images?.logos[0]?.file_path && data.images?.logos[0]?.file_path == '')) {
+        if ((!data.tagline || data.tagline == '') && (!data.images?.logos[0]?.file_path || data.images?.logos[0]?.file_path == '')) {
             // Set Movie name in Tagline
             const tagline = document.querySelector('.tagline__text');
             tagline.textContent = data.title;
@@ -524,3 +527,93 @@ function closeVideoPopup() {
     const body = document.querySelector('body');
     body.style.overflow = 'auto';
 }
+
+// SLIDESHOW POPUP OPEN / CLSOE LOGIC
+let images_slideshow = [];
+let currentImgNo = 0;
+
+function openSlideshowPopup() {
+    // images_slideshow = movie.images.posters;
+    images_slideshow = movie.images.backdrops;
+
+    if (!images_slideshow || images_slideshow.length == 0) {
+        return;
+    }
+    currentImgNo = 0;
+    // const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
+    const photoUrl = backdrop_baseurl + images_slideshow[currentImgNo].file_path;
+
+
+    const slideshowimg = document.querySelector('.slideshow-content img');
+    slideshowimg.setAttribute('src', photoUrl);
+
+    const slideshowcontainer = document.querySelector('.slideshow-container');
+    slideshowcontainer.style.visibility = 'visible';
+
+    const body = document.querySelector('body');
+    body.style.overflow = 'hidden';
+
+    // Disable previous button if no previous image
+    document.querySelector('#btnPrevisousImage').disabled = (currentImgNo == 0);
+
+    // Disable next button if no next image
+    document.querySelector('#btnNextImage').disabled = (currentImgNo == (images_slideshow.length - 1));
+}
+document.querySelector('.play-slideshow-button').addEventListener('click', openSlideshowPopup);
+
+function closeSlideshowPopup() {
+    const slideshowcontainer = document.querySelector('.slideshow-container');
+    slideshowcontainer.style.visibility = 'hidden';
+
+    let images_slideshow = [];
+    let currentImgNo = 0;
+    // const slideshowimg = document.querySelector('.slideshow-content img');
+    // slideshowimg.setAttribute('src', '');
+
+    const body = document.querySelector('body');
+    body.style.overflow = 'auto';
+}
+document.querySelector('#btnCloseSlideshowPopup').addEventListener('click', closeSlideshowPopup);
+
+function nextImage() {
+    console.log(currentImgNo, images_slideshow.length - 1);
+
+    if (currentImgNo < images_slideshow.length - 1) {
+        currentImgNo++;
+        const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
+
+        const slideshowimg = document.querySelector('.slideshow-content img');
+        slideshowimg.setAttribute('src', photoUrl);
+    }
+
+    // Disable previous button if no previous image
+    document.querySelector('#btnPrevisousImage').disabled = (currentImgNo == 0);
+
+    // Disable next button if no next image
+    document.querySelector('#btnNextImage').disabled = (currentImgNo == (images_slideshow.length - 1));
+}
+document.querySelector('#btnNextImage').addEventListener('click', nextImage);
+
+function previousImage() {
+    if (currentImgNo > 0) {
+        currentImgNo--;
+        const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
+
+        const slideshowimg = document.querySelector('.slideshow-content img');
+        slideshowimg.setAttribute('src', photoUrl);
+    }
+
+    // Disable previous button if no previous image
+    document.querySelector('#btnPrevisousImage').disabled = (currentImgNo == 0);
+
+    // Disable next button if no next image
+    document.querySelector('#btnNextImage').disabled = (currentImgNo == (images_slideshow.length - 1));
+}
+document.querySelector('#btnPrevisousImage').addEventListener('click', previousImage);
+
+// Close popup on Esc key press
+document.addEventListener('keydown', function (e) {
+    if (e.key == "Escape") {
+        closeSlideshowPopup();
+    }
+});
