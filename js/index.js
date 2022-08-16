@@ -617,7 +617,17 @@ function nextImage() {
         const photoUrl = backdrop_baseurl + images_slideshow[currentImgNo].file_path;
 
         const slideshowimg = document.querySelector('.slideshow-content img');
-        slideshowimg.setAttribute('src', photoUrl);
+
+        slideshowimg.style.animation = 'imgmoveout 0.5s ease-in forwards';
+        setTimeout(() => {
+            slideshowimg.setAttribute('src', photoUrl);
+            slideshowimg.visibility = 'hidden';
+            slideshowimg.style.left = '-150%';
+        }, 500);
+        slideshowimg.onload = () => {
+            slideshowimg.visibility = 'visible';
+            slideshowimg.style.animation = 'imgmovein 0.5s ease-in forwards';
+        };
 
         const slideshowStatus = document.querySelector('.slideshow-status');
         slideshowStatus.innerHTML = `${currentImgNo + 1}/${images_slideshow.length}`;
@@ -638,7 +648,17 @@ function previousImage() {
         const photoUrl = backdrop_baseurl + images_slideshow[currentImgNo].file_path;
 
         const slideshowimg = document.querySelector('.slideshow-content img');
-        slideshowimg.setAttribute('src', photoUrl);
+
+        slideshowimg.style.animation = 'imgmoveout-prev 0.5s ease-in forwards';
+        setTimeout(() => {
+            slideshowimg.setAttribute('src', photoUrl);
+            slideshowimg.visibility = 'hidden';
+            slideshowimg.style.left = '150%';
+        }, 500);
+        slideshowimg.onload = () => {
+            slideshowimg.visibility = 'visible';
+            slideshowimg.style.animation = 'imgmovein-prev 0.5s ease-in forwards';
+        };
 
         const slideshowStatus = document.querySelector('.slideshow-status');
         slideshowStatus.innerHTML = `${currentImgNo + 1}/${images_slideshow.length}`;

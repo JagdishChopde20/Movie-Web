@@ -33,7 +33,40 @@
       max-height: 97%;
       border: 0;
       object-fit: contain;
-      // box-shadow: 0 0 8px rgb(0 0 0 / 60%);
+    }
+
+    @keyframes imgmoveout {
+      from {
+        left: 50%;
+      }
+      to {
+        left: 150%;
+      }
+    }
+    @keyframes imgmovein {
+      from {
+        left: -150%;
+      }
+      to {
+        left: 50%;
+      }
+    }
+
+    @keyframes imgmoveout-prev {
+      from {
+        left: 50%;
+      }
+      to {
+        left: -150%;
+      }
+    }
+    @keyframes imgmovein-prev {
+      from {
+        left: 150%;
+      }
+      to {
+        left: 50%;
+      }
     }
 
     .icon-img {
