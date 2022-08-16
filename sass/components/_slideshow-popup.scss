@@ -47,14 +47,14 @@
       border: none;
       transition: all 0.3s;
       background-color: transparent;
-      outline:none;
+      outline: none;
 
       &:hover:not(:disabled) {
         color: var(--color-accent-shade);
       }
 
       &:active:not(:disabled) {
-        transform: translate(-50%, -50%) scale(.95);
+        transform: translate(-50%, -50%) scale(0.95);
       }
 
       // &:focus:not(:disabled) {
@@ -74,12 +74,27 @@
     .icon-img--previous {
       left: 3%;
     }
+
+    .slideshow-status {
+      position: absolute;
+      left: 6rem;
+      top: 4rem;
+      transform: translate(-50%, -50%);
+      z-index: 902;
+      font-size: 4rem;
+      color: #ddd;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+      background-color: transparent;
+      outline: none;
+    }
   }
 
   #btnCloseSlideshowPopup {
     background: transparent;
     color: #ccc;
-    font-size: 2.5rem;
+    font-size: 5rem;
 
     position: absolute;
     right: 5rem;

@@ -309,20 +309,36 @@ const windowOnload = () => {
             }
 
             const posters = document.querySelector('.posters__content--items');
-            postersToShow.forEach(element => {
+            postersToShow.forEach((element, i) => {
                 const photoUrl = poster_baseurl + element.file_path;
                 const itemHTML = `  <figure class="poster">
-                                        <img class="poster__photo" src="${photoUrl}" alt="Poster of Movie">
+                                        <img class="poster__photo" src="${photoUrl}" data-imgindex="${i}" alt="Poster of Movie">
                                     </figure>`;
                 posters.insertAdjacentHTML('beforeend', itemHTML);
             });
 
             if (data.images.posters.length > 10) {
-                const viewAllHTML = `<div class="view-all-card">
+                const viewAllHTML = `<div class="view-all-card view-all-posters">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>`;
                 posters.insertAdjacentHTML('beforeend', viewAllHTML);
             }
+
+            // setup slideshow popup
+            document.querySelectorAll('.poster__photo').forEach(element => {
+                element.addEventListener('click', (e) => {
+                    const currIndex = e.target.dataset.imgindex ? e.target.dataset.imgindex : 0;
+                    const imgBaseUrl = poster_baseurl;
+                    openSlideshowPopup(data.images.posters, currIndex, imgBaseUrl);
+                });
+            });
+            // view all btn should show all images staring from next img
+            document.querySelector('.view-all-posters')?.addEventListener('click', () => {
+                const currIndex = 9;
+                const imgBaseUrl = poster_baseurl;
+                openSlideshowPopup(data.images.posters, currIndex, imgBaseUrl);
+            });
+
         } else {
             // Hide Section
             const posters_section = document.querySelector('.posters');
@@ -340,20 +356,35 @@ const windowOnload = () => {
             }
 
             const backdrops = document.querySelector('.backdrops__content--items');
-            backdropsToShow.forEach(element => {
+            backdropsToShow.forEach((element, i) => {
                 const photoUrl = poster_baseurl + element.file_path;
                 const itemHTML = `  <figure class="backdrop">
-                                        <img class="backdrop__photo" src="${photoUrl}" alt="Backdrop of Movie">
+                                        <img class="backdrop__photo" src="${photoUrl}" data-imgindex="${i}" alt="Backdrop of Movie">
                                     </figure>`;
                 backdrops.insertAdjacentHTML('beforeend', itemHTML);
             });
 
             if (data.images.backdrops.length > 9) {
-                const viewAllHTML = `<div class="view-all-card">
+                const viewAllHTML = `<div class="view-all-card view-all-backdrops">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>`;
                 backdrops.insertAdjacentHTML('beforeend', viewAllHTML);
             }
+
+            // setup slideshow popup
+            document.querySelectorAll('.backdrop__photo').forEach(element => {
+                element.addEventListener('click', (e) => {
+                    const currIndex = e.target.dataset.imgindex ? e.target.dataset.imgindex : 0;
+                    const imgBaseUrl = backdrop_baseurl;
+                    openSlideshowPopup(data.images.backdrops, currIndex, imgBaseUrl);
+                });
+            });
+            // view all btn should show all images staring from next img
+            document.querySelector('.view-all-backdrops')?.addEventListener('click', () => {
+                const currIndex = 8;
+                const imgBaseUrl = backdrop_baseurl;
+                openSlideshowPopup(data.images.backdrops, currIndex, imgBaseUrl);
+            });
         } else {
             // Hide Section
             const backdrops_section = document.querySelector('.backdrops');
@@ -487,7 +518,6 @@ const windowOnload = () => {
         }
     });
 }
-console.log(id);
 window.onload = windowOnload;
 
 
@@ -532,20 +562,23 @@ function closeVideoPopup() {
 let images_slideshow = [];
 let currentImgNo = 0;
 
-function openSlideshowPopup() {
+function openSlideshowPopup(images, currIndex, imgBaseUrl) {
+    images_slideshow = images;
+    currentImgNo = currIndex;
     // images_slideshow = movie.images.posters;
-    images_slideshow = movie.images.backdrops;
+    // images_slideshow = movie.images.backdrops;
 
     if (!images_slideshow || images_slideshow.length == 0) {
         return;
     }
-    currentImgNo = 0;
     // const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
-    const photoUrl = backdrop_baseurl + images_slideshow[currentImgNo].file_path;
-
+    const photoUrl = imgBaseUrl + images_slideshow[currentImgNo].file_path;
 
     const slideshowimg = document.querySelector('.slideshow-content img');
     slideshowimg.setAttribute('src', photoUrl);
+
+    const slideshowStatus = document.querySelector('.slideshow-status');
+    slideshowStatus.innerHTML = `${Number(currentImgNo) + 1}/${images_slideshow.length}`;
 
     const slideshowcontainer = document.querySelector('.slideshow-container');
     slideshowcontainer.style.visibility = 'visible';
@@ -580,10 +613,14 @@ function nextImage() {
 
     if (currentImgNo < images_slideshow.length - 1) {
         currentImgNo++;
-        const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
+        // const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
+        const photoUrl = backdrop_baseurl + images_slideshow[currentImgNo].file_path;
 
         const slideshowimg = document.querySelector('.slideshow-content img');
         slideshowimg.setAttribute('src', photoUrl);
+
+        const slideshowStatus = document.querySelector('.slideshow-status');
+        slideshowStatus.innerHTML = `${currentImgNo + 1}/${images_slideshow.length}`;
     }
 
     // Disable previous button if no previous image
@@ -597,10 +634,14 @@ document.querySelector('#btnNextImage').addEventListener('click', nextImage);
 function previousImage() {
     if (currentImgNo > 0) {
         currentImgNo--;
-        const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
+        // const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
+        const photoUrl = backdrop_baseurl + images_slideshow[currentImgNo].file_path;
 
         const slideshowimg = document.querySelector('.slideshow-content img');
         slideshowimg.setAttribute('src', photoUrl);
+
+        const slideshowStatus = document.querySelector('.slideshow-status');
+        slideshowStatus.innerHTML = `${currentImgNo + 1}/${images_slideshow.length}`;
     }
 
     // Disable previous button if no previous image
