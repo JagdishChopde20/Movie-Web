@@ -618,15 +618,15 @@ function nextImage() {
 
         const slideshowimg = document.querySelector('.slideshow-content img');
 
-        slideshowimg.style.animation = 'imgmoveout 0.5s ease-in forwards';
+        slideshowimg.style.animation = 'imgmoveout 0.3s ease-in forwards';
         setTimeout(() => {
             slideshowimg.setAttribute('src', photoUrl);
             slideshowimg.visibility = 'hidden';
             slideshowimg.style.left = '-150%';
-        }, 500);
+        }, 300);
         slideshowimg.onload = () => {
             slideshowimg.visibility = 'visible';
-            slideshowimg.style.animation = 'imgmovein 0.5s ease-in forwards';
+            slideshowimg.style.animation = 'imgmovein 0.3s ease-in forwards';
         };
 
         const slideshowStatus = document.querySelector('.slideshow-status');
@@ -649,15 +649,15 @@ function previousImage() {
 
         const slideshowimg = document.querySelector('.slideshow-content img');
 
-        slideshowimg.style.animation = 'imgmoveout-prev 0.5s ease-in forwards';
+        slideshowimg.style.animation = 'imgmoveout-prev 0.3s ease-in forwards';
         setTimeout(() => {
             slideshowimg.setAttribute('src', photoUrl);
             slideshowimg.visibility = 'hidden';
             slideshowimg.style.left = '150%';
-        }, 500);
+        }, 300);
         slideshowimg.onload = () => {
             slideshowimg.visibility = 'visible';
-            slideshowimg.style.animation = 'imgmovein-prev 0.5s ease-in forwards';
+            slideshowimg.style.animation = 'imgmovein-prev 0.3s ease-in forwards';
         };
 
         const slideshowStatus = document.querySelector('.slideshow-status');
