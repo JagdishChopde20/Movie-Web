@@ -17,10 +17,32 @@
 </head>
 
 <body>
+    <nav class="navbar">
+        <div class="navbar__leftside">
+            <i class="fas fa-film"></i>
+            Movie-Web
+        </div>
+        <div class="navbar__centerside">
+            <a href="#hero" class="nav-link hero-link">Title</a>
+            <a href="#overview" class="nav-link overview-link">Overview</a>
+            <a href="#storyline" class="nav-link storyline-link">Storyline</a>
+            <a href="#casts" class="nav-link casts-link">Casts</a>
+            <a href="#posters" class="nav-link posters-link">Posters</a>
+            <a href="#backdrops" class="nav-link backdrops-link">Backdrops</a>
+            <a href="#similar" class="nav-link similar-link">Similar</a>
+            <a href="#recommendations" class="nav-link recommendations-link">Recommendations</a>
+
+        </div>
+        <div class="navbar__rightside">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitter"></i>
+        </div>
+    </nav>
 
     <main class="container">
         <!-- Section Hero -->
-        <section class="hero">
+        <section id="hero" class="hero">
             <div class="tagline">
                 <img class="img-movie-title">
                 <h1 id="tagline" class="tagline__text">LOADING...</h1>
@@ -28,7 +50,7 @@
         </section>
 
         <!-- Section Overview -->
-        <section class="overview section-grid section-padding">
+        <section id="overview" class="overview section-grid section-padding">
             <div class="overview__content overview-grid">
                 <div class="overview__content--poster">
                     <img class="poster">
@@ -67,10 +89,10 @@
                             <i class="fas fa-play cta__icon"></i>
                             <span class="cta__text play-video-button__text">Play Trailer</span>
                         </button>
-                        <button class="cta play-slideshow-button margin-top-medium">
+                        <a href="#posters" class="cta play-slideshow-button margin-top-medium">
                             <i class="fas fa-images cta__icon"></i>
                             <span class="cta__text">View Images</span>
-                        </button>
+                        </a>
                         <button class="cta a-homepage margin-top-medium">
                             <i class="fas fa-globe cta__icon"></i>
                             <span class="cta__text">Homepage</span>
@@ -98,7 +120,7 @@
         </section>
 
         <!-- Section Storyline -->
-        <section class="storyline section-grid section-padding">
+        <section id="storyline" class="storyline section-grid section-padding">
             <div class="storyline__content">
                 <h2 class="section-title">Storyline</h2>
                 <div class="storyline__content--items">
@@ -108,7 +130,7 @@
         </section>
 
         <!-- Section Casts -->
-        <section class="casts section-grid section-padding">
+        <section id="casts" class="casts section-grid section-padding">
             <div class="casts__content">
                 <h2 class="section-title">Casts</h2>
                 <div class="casts__content--items item-small-grid">
@@ -118,7 +140,7 @@
         </section>
 
         <!-- Section Posters -->
-        <section class="posters section-grid section-padding">
+        <section id="posters" class="posters section-grid section-padding">
             <div class="posters__content">
                 <h2 class="section-title">Posters</h2>
                 <div class="posters__content--items item-small-grid">
@@ -128,7 +150,7 @@
         </section>
 
         <!-- Section Backdrops -->
-        <section class="backdrops section-grid section-padding">
+        <section id="backdrops" class="backdrops section-grid section-padding">
             <div class="backdrops__content">
                 <h2 class="section-title">Backdrops</h2>
                 <div class="backdrops__content--items item-grid">
@@ -157,7 +179,7 @@
         </section>
 
         <!-- Section Similar -->
-        <section class="similar-movies-section movies section-grid section-padding ">
+        <section id="similar" class="similar-movies-section movies section-grid section-padding ">
             <div class="movies__content">
                 <h2 class="section-title">Simillar Movies</h2>
                 <div class="similar-movies movies__content--items item-small-grid">
@@ -167,7 +189,7 @@
         </section>
 
         <!-- Section Recommendations -->
-        <section class="recommendations-movies-section movies section-grid margin-top-small">
+        <section id="recommendations" class="recommendations-movies-section movies section-grid margin-top-small">
             <div class="movies__content">
                 <h2 class="section-title">Recommendations Movies</h2>
                 <div class="recommendations-movies movies__content--items item-small-grid">
@@ -207,6 +229,8 @@
             </button>
         </div>
     </div>
+
+    <button id="btnGoToTop" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
 </body>
 

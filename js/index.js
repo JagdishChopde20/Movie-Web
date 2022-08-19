@@ -18,6 +18,10 @@ r.style.setProperty('--color-accent-tint', themeColor.colorTint);
 import { getMovieDetails, genres, getWatchProviders } from "./api";
 import { signup } from "./popups/sign-up-in";
 
+// DEFAULT POSTER IMAGE
+import ImgDefaultPoster from "../assets/no-poster.png";
+import ImgDefaultBackdrop from "../assets/no-poster-land.png";
+
 // GENRES IMAGES
 import ImgAction from "../assets/genres-icons/Action.png";
 import ImgAdventure from "../assets/genres-icons/Adventure.png";
@@ -491,6 +495,22 @@ const windowOnload = () => {
             recommendations_movies_section.style.display = 'none';
         }
 
+
+        // Set default poster img if real img failed to load
+        document.querySelectorAll('.movie__poster, .poster__photo, .cast__photo, .poster, .b2collection-poster').forEach(e => {
+            e.onerror = (img) => {
+                img.target.src = ImgDefaultPoster;
+            }
+        });
+
+        // Set default backdrop img if real img failed to load
+        document.querySelectorAll('.backdrop__photo').forEach(e => {
+            e.onerror = (img) => {
+                img.target.src = ImgDefaultBackdrop;
+            }
+        });
+
+
         // } catch (error) {
         //     console.error(error);
         // }
@@ -575,7 +595,13 @@ function openSlideshowPopup(images, currIndex, imgBaseUrl) {
     const photoUrl = imgBaseUrl + images_slideshow[currentImgNo].file_path;
 
     const slideshowimg = document.querySelector('.slideshow-content img');
+    slideshowimg.visibility = 'hidden';
     slideshowimg.setAttribute('src', photoUrl);
+
+    slideshowimg.onload = () => {
+        slideshowimg.visibility = 'visible';
+        slideshowimg.style.animation = 'imgmovein 0.3s ease-in forwards';
+    };
 
     const slideshowStatus = document.querySelector('.slideshow-status');
     slideshowStatus.innerHTML = `${Number(currentImgNo) + 1}/${images_slideshow.length}`;
@@ -609,8 +635,6 @@ function closeSlideshowPopup() {
 document.querySelector('#btnCloseSlideshowPopup').addEventListener('click', closeSlideshowPopup);
 
 function nextImage() {
-    console.log(currentImgNo, images_slideshow.length - 1);
-
     if (currentImgNo < images_slideshow.length - 1) {
         currentImgNo++;
         // const photoUrl = poster_baseurl + images_slideshow[currentImgNo].file_path;
@@ -678,3 +702,52 @@ document.addEventListener('keydown', function (e) {
         closeSlideshowPopup();
     }
 });
+
+
+// NAVBAR OBSERVER ------------------------------------------
+const nav = document.querySelector('.navbar');
+const navHeight = nav.getBoundingClientRect().height;
+// console.log(`-${navHeight}px`);
+
+const stickyNav = function (entries) {
+    const [entry] = entries;
+    // console.log(entry);
+
+    if (!entry.isIntersecting) {
+        nav.classList.add('sticky');
+    } else {
+        nav.classList.remove('sticky');
+    }
+}
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+    root: null,
+    threshold: 0,
+    rootMargin: `-${navHeight}px`
+});
+headerObserver.observe(document.querySelector('.hero'));
+
+
+// CODE FOR GO TO TOP BUTTON
+//Get the button
+var mybutton = document.getElementById("btnGoToTop");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () { scrollFunction() };
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+    } else {
+        mybutton.style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+mybutton.addEventListener('click', topFunction);
+
