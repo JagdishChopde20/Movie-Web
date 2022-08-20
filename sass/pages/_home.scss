@@ -12,10 +12,14 @@
   align-items: center;
 
   .tagline {
-    padding: 6rem 10rem;
+    padding: 10rem 8rem;
     background-color: rgba(#000, 0.6);
-    width: 80%;
+    width: 85%;
     text-align: center;
+
+    .img-movie-title {
+      max-height: 50vh;
+    }
 
     &__text {
       font-size: 6rem;

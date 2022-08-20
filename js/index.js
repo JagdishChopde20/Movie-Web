@@ -1,19 +1,66 @@
 
 import { themeColors, getFullLanguageName } from "./globals";
 
-// Set Random Accent Color
-const themeColor = themeColors[Math.floor(Math.random() * themeColors.length)];
+function setThemeColor(colorIndex) {
+    const themeColor = themeColors[colorIndex]; // Math.floor(Math.random() * themeColors.length)// Get the root element
 
-// Get the root element
-var r = document.querySelector(':root');
+    var r = document.querySelector(':root');
 
-// Set the value of accent color css variables
-r.style.setProperty('--color-accent', themeColor.color);
-r.style.setProperty('--color-accent-rgb', themeColor.colorRgb);
-r.style.setProperty('--color-accent-contrast', themeColor.colorContrast);
-r.style.setProperty('--color-accent-shade', themeColor.colorShade);
-r.style.setProperty('--color-accent-tint', themeColor.colorTint);
+    // Set the value of accent color css variables
+    r.style.setProperty('--color-accent', themeColor.color);
+    r.style.setProperty('--color-accent-rgb', themeColor.colorRgb);
+    r.style.setProperty('--color-accent-contrast', themeColor.colorContrast);
+    r.style.setProperty('--color-accent-shade', themeColor.colorShade);
+    r.style.setProperty('--color-accent-tint', themeColor.colorTint);
+}
 
+let colorIndex = 0;
+
+function setColorPalette() {
+    // get theme color lastly saved into localStorage
+    const themeColorIndex = localStorage.getItem('themeColorIndex');
+    if (themeColorIndex) {
+        colorIndex = themeColorIndex;
+        setThemeColor(themeColorIndex);
+    } else {
+        setThemeColor(colorIndex);
+    }
+
+    const themeContainer = document.querySelector('.theme-palette-container');
+
+    for (let index = 0; index < themeColors.length; index++) {
+        const color = themeColors[index];
+        const themeBtn = `  <button class="btn-theme-palette" data-index="${index}" style="background-color:${color.color}; color:${index == colorIndex ? '#fff' : color.color}">
+                                <i class="fas fa-fill-drip"></i>
+                            </button>`;
+        themeContainer.insertAdjacentHTML('beforeend', themeBtn);
+    }
+
+    document.querySelectorAll('.btn-theme-palette').forEach((e) => {
+        e.addEventListener('click', (btn) => {
+            const prevBtn = document.querySelector(`button[data-index='${colorIndex}']`);
+            prevBtn.style.color = prevBtn.style.backgroundColor;
+
+            colorIndex = btn.target.dataset.index;
+            btn.target.style.color = '#fff';
+
+            setThemeColor(colorIndex);
+
+            // set theme color lastly saved into localStorage
+            localStorage.setItem('themeColorIndex', colorIndex);
+        })
+    });
+}
+setColorPalette();
+
+document.querySelector('.btn-theme').addEventListener('click', (e) => {
+    const palette = document.querySelector('.theme-palette-container');
+    if (palette.style.visibility == 'visible') {
+        palette.style.visibility = 'collapse';
+    } else {
+        palette.style.visibility = 'visible';
+    }
+});
 
 import { getMovieDetails, genres, getWatchProviders } from "./api";
 import { signup } from "./popups/sign-up-in";
@@ -715,8 +762,10 @@ const stickyNav = function (entries) {
 
     if (!entry.isIntersecting) {
         nav.classList.add('sticky');
+        document.querySelector('.navbar-title').textContent = movie?.title;
     } else {
         nav.classList.remove('sticky');
+        document.querySelector('.navbar-title').textContent = 'Movie-Web';
     }
 }
 

@@ -10,6 +10,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 3.5rem;
+  color: #fff;
 
   &__leftside {
     cursor: pointer;
@@ -50,16 +51,52 @@
     position: relative;
     font-size: 1.5rem;
 
-    & > * {
+    .btn-theme-palette, .btn-theme {
+      position: relative;
+      // background-color: var(--color-accent);
+      padding: 0.8rem 1rem;
+      border-radius: 50%;
+      color: #fff;
+      transition: all 0.3s;
+      border: 0;
+      font-size: 1.8rem;
       cursor: pointer;
+
+      & > i {
+        pointer-events: none;
+      }
+
+      &:active:not(:disabled) {
+        transform: scale(0.95);
+        background-color: #fff;
+      }
     }
 
-    & > *:hover {
+    .btn-theme-palette:hover + .theme-palette-container {
+      display: block;
+    }
+
+    .theme-palette-container {
+      visibility: collapse;
+      position: absolute;
+      background-color: #fff;
+      z-index: 800;
+      box-shadow: 0 0 35px rgb(0 0 0 / 10%);
+      border-radius: 5px;
+      height: auto;
+      width: auto;
+      padding: 2rem;
+      margin-top: 0.5rem;
+      right: 1rem;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    & > .btn-theme {
+      background-color: #fff;
       color: var(--color-accent);
-    }
-
-    & > *:not(:last-child) {
-      margin-right: 1rem;
     }
   }
 }
@@ -69,6 +106,7 @@
   background-color: #fff;
   z-index: 800;
   box-shadow: 0 0 35px rgb(0 0 0 / 10%);
+  color: #232323;
 
   .navbar__centerside {
     & > a {
