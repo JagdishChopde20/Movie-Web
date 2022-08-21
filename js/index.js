@@ -62,7 +62,7 @@ document.querySelector('.btn-theme').addEventListener('click', (e) => {
     }
 });
 
-import { getMovieDetails, genres, getWatchProviders } from "./api";
+import { getMovieDetails, genres, getWatchProviders, getPersonImages } from "./api";
 import { signup } from "./popups/sign-up-in";
 
 // DEFAULT POSTER IMAGE
@@ -325,10 +325,10 @@ const windowOnload = () => {
             }
 
             const casts = document.querySelector('.casts__content--items');
-            castsToShow.forEach(element => {
+            castsToShow.forEach((element, index) => {
                 const photoUrl = poster_baseurl + element.profile_path;
                 const itemHTML = `  <figure class="cast">
-                                        <img class="cast__photo" src="${photoUrl}" alt="Photo of ${element.name}">
+                                        <img class="cast__photo" src="${photoUrl}" data-id="${element.id}" alt="Photo of ${element.name}">
                                         <figcaption class="cast__text">
                                             <h4 class="cast-name">${element.name}</h4>
                                             <p class="cast-as">${element.character}</p>
@@ -343,6 +343,21 @@ const windowOnload = () => {
                                     </div>`;
                 casts.insertAdjacentHTML('beforeend', viewAllHTML);
             }
+
+            // On click of cast show all his/her images in slideshow
+            document.querySelectorAll('.cast__photo').forEach(ele => {
+                ele.addEventListener('click', card => {
+                    if (card.target.dataset.id) {
+                        // Get Cast Images
+                        getPersonImages(card.target.dataset.id).then(data => {
+                            const currIndex = 0;
+                            const imgBaseUrl = poster_baseurl;
+                            openSlideshowPopup(data.profiles, currIndex, imgBaseUrl);
+                        });
+                    }
+                });
+            });
+
         } else {
             // Hide Casts Section
             const casts_section = document.querySelector('.casts');
@@ -557,10 +572,13 @@ const windowOnload = () => {
             }
         });
 
+        // set movie title on navbar if page is sticky
+        const nav = document.querySelector('.navbar');
+        if (nav.classList.contains('sticky')) {
+            document.querySelector('.navbar-title').textContent = movie?.title;
+        }
 
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        // end of movie data
     });
 
     // Get Watch Providers
@@ -584,6 +602,7 @@ const windowOnload = () => {
             watchproviders.style.display = 'none';
         }
     });
+
 }
 window.onload = windowOnload;
 

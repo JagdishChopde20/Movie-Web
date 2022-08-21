@@ -33,6 +33,11 @@ export const getWatchProviders = (id) => {
     return getHttpResult(watchProvidersUrl);
 }
 
+export const getPersonImages = (id) => {
+    const personImagesUrl = `${baseUrl}/person/${id}/images?api_key=${apiKey}`;
+    return getHttpResult(personImagesUrl);
+}
+
 export const genres = {
     "genres": [
         {

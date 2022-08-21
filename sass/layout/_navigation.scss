@@ -36,10 +36,11 @@
       transition: all 0.3s;
       height: 100%;
       padding-top: 3rem;
+      text-shadow: 1px 1px #232323;
     }
 
     & > a:hover {
-      color: var(--color-accent);
+      color: #232323;
     }
 
     & > a:not(:last-child) {
@@ -51,9 +52,9 @@
     position: relative;
     font-size: 1.5rem;
 
-    .btn-theme-palette, .btn-theme {
+    .btn-theme-palette,
+    .btn-theme {
       position: relative;
-      // background-color: var(--color-accent);
       padding: 0.8rem 1rem;
       border-radius: 50%;
       color: #fff;
@@ -111,6 +112,7 @@
   .navbar__centerside {
     & > a {
       color: #232323;
+      text-shadow: 1px 1px #ccc;
     }
     & > a:hover {
       color: var(--color-accent);
