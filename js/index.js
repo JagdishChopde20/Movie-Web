@@ -225,350 +225,10 @@ const windowOnload = () => {
             homepage.addEventListener('click', () => window.open(data.homepage, '_blank'));
         }
 
-        // Set Genres
-        const genres = document.querySelector('.genres__content--items');
-        data.genres.forEach(element => {
-            let genreImg;
-            switch (element.name) {
-                case "Action":
-                    genreImg = ImgAction;
-                    break;
-                case "Adventure":
-                    genreImg = ImgAdventure;
-                    break;
-                case "Animation":
-                    genreImg = ImgAnimation;
-                    break;
-                case "Comedy":
-                    genreImg = ImgComedy;
-                    break;
-                case "Crime":
-                    genreImg = ImgCrime;
-                    break;
-                case "Documentary":
-                    genreImg = ImgDocumentary;
-                    break;
-                case "Drama":
-                    genreImg = ImgDrama;
-                    break;
-                case "Family":
-                    genreImg = ImgFamily;
-                    break;
-                case "Fantasy":
-                    genreImg = ImgFantasy;
-                    break;
-                case "History":
-                    genreImg = ImgHistory;
-                    break;
-                case "Horror":
-                    genreImg = ImgHorror;
-                    break;
-                case "Music":
-                    genreImg = ImgMusic;
-                    break;
-                case "Mystery":
-                    genreImg = ImgMystery;
-                    break;
-                case "Romance":
-                    genreImg = ImgRomance;
-                    break;
-                case "Science Fiction":
-                    genreImg = ImgScienceFiction;
-                    break;
-                case "TV Movie":
-                    genreImg = ImgTVMovie;
-                    break;
-                case "Thriller":
-                    genreImg = ImgThriller;
-                    break;
-                case "War":
-                    genreImg = ImgWar;
-                    break;
-                case "Western":
-                    genreImg = ImgWestern;
-                    break;
-
-                default:
-                    break;
-            }
-
-            const itemHTML = `  <figure class="genre">
-                                <img class="genre__icon" src="${genreImg}" alt="${element.name}">
-                                <figcaption class="genre__text"> ${element.name} </figcaption>
-                            </figure>`;
-            genres.insertAdjacentHTML('beforeend', itemHTML);
-        });
-
-        // Set Storyline Background
-        const storyline_container = document.querySelector('.storyline');
-        if (data.overview) {
-            if (data.images?.backdrops[1]?.file_path) {
-                storyline_container.style.backgroundImage = `url(${backdrop_baseurl + data.images?.backdrops[1]?.file_path})`;
-            }
-
-            // Set Storyline
-            const storyline = document.querySelector('.storyline__content--items');
-            storyline.textContent = data.overview;
-        } else {
-            storyline_container.disabled = true;
-        }
-
-
-
-        // Set Casts
-        if (data.credits && data.credits.cast && data.credits.cast.length > 0) {
-            let castsToShow = [];
-            if (data.credits.cast.length > 10) {
-                castsToShow = data.credits.cast.slice(0, 9);
-            } else {
-                castsToShow = data.credits.cast.slice(0, 10);
-            }
-
-            const casts = document.querySelector('.casts__content--items');
-            castsToShow.forEach((element, index) => {
-                const photoUrl = poster_baseurl + element.profile_path;
-                const itemHTML = `  <figure class="cast">
-                                        <img class="cast__photo" src="${photoUrl}" data-id="${element.id}" alt="Photo of ${element.name}">
-                                        <figcaption class="cast__text">
-                                            <h4 class="cast-name">${element.name}</h4>
-                                            <p class="cast-as">${element.character}</p>
-                                        </figcaption>
-                                    </figure>`;
-                casts.insertAdjacentHTML('beforeend', itemHTML);
-            });
-
-            if (data.credits.cast.length > 10) {
-                const viewAllHTML = `<div class="view-all-card">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>`;
-                casts.insertAdjacentHTML('beforeend', viewAllHTML);
-            }
-
-            // On click of cast show all his/her images in slideshow
-            document.querySelectorAll('.cast__photo').forEach(ele => {
-                ele.addEventListener('click', card => {
-                    if (card.target.dataset.id) {
-                        // Get Cast Images
-                        getPersonImages(card.target.dataset.id).then(data => {
-                            const currIndex = 0;
-                            const imgBaseUrl = poster_baseurl;
-                            openSlideshowPopup(data.profiles, currIndex, imgBaseUrl);
-                        });
-                    }
-                });
-            });
-
-        } else {
-            // Hide Casts Section
-            const casts_section = document.querySelector('.casts');
-            casts_section.style.display = 'none';
-        }
-
-
-        // Set Posters
-        if (data.images && data.images.posters && data.images.posters.length > 0) {
-            let postersToShow = [];
-            if (data.images.posters.length > 10) {
-                postersToShow = data.images.posters.slice(0, 9);
-            } else {
-                postersToShow = data.images.posters.slice(0, 10);
-            }
-
-            const posters = document.querySelector('.posters__content--items');
-            postersToShow.forEach((element, i) => {
-                const photoUrl = poster_baseurl + element.file_path;
-                const itemHTML = `  <figure class="poster">
-                                        <img class="poster__photo" src="${photoUrl}" data-imgindex="${i}" alt="Poster of Movie">
-                                    </figure>`;
-                posters.insertAdjacentHTML('beforeend', itemHTML);
-            });
-
-            if (data.images.posters.length > 10) {
-                const viewAllHTML = `<div class="view-all-card view-all-posters">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>`;
-                posters.insertAdjacentHTML('beforeend', viewAllHTML);
-            }
-
-            // setup slideshow popup
-            document.querySelectorAll('.poster__photo').forEach(element => {
-                element.addEventListener('click', (e) => {
-                    const currIndex = e.target.dataset.imgindex ? e.target.dataset.imgindex : 0;
-                    const imgBaseUrl = poster_baseurl;
-                    openSlideshowPopup(data.images.posters, currIndex, imgBaseUrl);
-                });
-            });
-            // view all btn should show all images staring from next img
-            document.querySelector('.view-all-posters')?.addEventListener('click', () => {
-                const currIndex = 9;
-                const imgBaseUrl = poster_baseurl;
-                openSlideshowPopup(data.images.posters, currIndex, imgBaseUrl);
-            });
-
-        } else {
-            // Hide Section
-            const posters_section = document.querySelector('.posters');
-            posters_section.style.display = 'none';
-        }
-
-
-        // Set Backdrops
-        if (data.images && data.images.backdrops && data.images.backdrops.length > 0) {
-            let backdropsToShow = [];
-            if (data.images.backdrops.length > 9) {
-                backdropsToShow = data.images.backdrops.slice(0, 8);
-            } else {
-                backdropsToShow = data.images.backdrops.slice(0, 9);
-            }
-
-            const backdrops = document.querySelector('.backdrops__content--items');
-            backdropsToShow.forEach((element, i) => {
-                const photoUrl = poster_baseurl + element.file_path;
-                const itemHTML = `  <figure class="backdrop">
-                                        <img class="backdrop__photo" src="${photoUrl}" data-imgindex="${i}" alt="Backdrop of Movie">
-                                    </figure>`;
-                backdrops.insertAdjacentHTML('beforeend', itemHTML);
-            });
-
-            if (data.images.backdrops.length > 9) {
-                const viewAllHTML = `<div class="view-all-card view-all-backdrops">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>`;
-                backdrops.insertAdjacentHTML('beforeend', viewAllHTML);
-            }
-
-            // setup slideshow popup
-            document.querySelectorAll('.backdrop__photo').forEach(element => {
-                element.addEventListener('click', (e) => {
-                    const currIndex = e.target.dataset.imgindex ? e.target.dataset.imgindex : 0;
-                    const imgBaseUrl = backdrop_baseurl;
-                    openSlideshowPopup(data.images.backdrops, currIndex, imgBaseUrl);
-                });
-            });
-            // view all btn should show all images staring from next img
-            document.querySelector('.view-all-backdrops')?.addEventListener('click', () => {
-                const currIndex = 8;
-                const imgBaseUrl = backdrop_baseurl;
-                openSlideshowPopup(data.images.backdrops, currIndex, imgBaseUrl);
-            });
-        } else {
-            // Hide Section
-            const backdrops_section = document.querySelector('.backdrops');
-            backdrops_section.style.display = 'none';
-        }
-
-
-        // Set Belongs to Collection
-        const backdrops_section = document.querySelector('.b2collection');
-        if (data.belongs_to_collection && data.belongs_to_collection?.poster_path) {
-            // Set Name
-            const b2collectionName = document.querySelector('.b2collection-name');
-            b2collectionName.textContent = data.belongs_to_collection?.name;
-
-            // Set Poster
-            const poster = document.querySelector('.b2collection-poster');
-            poster.src = poster_baseurl + data.belongs_to_collection?.poster_path;
-
-            // Set Background
-            backdrops_section.style.backgroundImage = `url(${backdrop_baseurl + data.belongs_to_collection.backdrop_path})`;
-        } else {
-            // Hide Section
-            backdrops_section.style.display = 'none';
-        }
-
-
-        // Set Similar Movies
-        if (data.similar && data.similar?.results && data.similar?.results?.length > 0) {
-            let moviesToShow = [];
-            if (data.similar.results.length > 10) {
-                moviesToShow = data.similar.results.slice(0, 9);
-            } else {
-                moviesToShow = data.similar.results.slice(0, 10);
-            }
-
-            const similarMovies = document.querySelector('.similar-movies');
-            moviesToShow.forEach(element => {
-                const posterUrl = poster_baseurl + element.poster_path;
-                const itemHTML = `  <a class="a-movie" href="?id=${element.id}">
-                                        <figure class="movie">
-                                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
-                                            <figcaption class="movie__text">
-                                                <h4 class="movie-name">${element.title}</h4>
-                                                <p class="text-as">${element.release_date}</p>
-                                                <div class="rating-chip">
-                                                    <i class="fas fa-star"></i>
-                                                    <span class="rating">${element.vote_average.toFixed(1)}</span>
-                                                </div>
-                                            </figcaption>
-                                        </figure>
-                                    </a>`;
-                similarMovies.insertAdjacentHTML('beforeend', itemHTML);
-            });
-
-            if (data.similar.results.length > 10) {
-                const viewAllHTML = `<div class="view-all-card">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>`;
-                similarMovies.insertAdjacentHTML('beforeend', viewAllHTML);
-            }
-        } else {
-            // Hide Section
-            const similar_movies_section = document.querySelector('.similar-movies-section');
-            similar_movies_section.style.display = 'none';
-        }
-
-        // Set Recommendations Movies
-        if (data.recommendations && data.recommendations?.results && data.recommendations?.results?.length > 0) {
-            let moviesToShow = [];
-            if (data.recommendations.results.length > 10) {
-                moviesToShow = data.recommendations.results.slice(0, 9);
-            } else {
-                moviesToShow = data.recommendations.results.slice(0, 10);
-            }
-
-            const recommendationsMovies = document.querySelector('.recommendations-movies');
-            moviesToShow.forEach(element => {
-                const posterUrl = poster_baseurl + element.poster_path;
-                const itemHTML = `  <a class="a-movie" href="?id=${element.id}">
-                                        <figure class="movie">
-                                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
-                                            <figcaption class="movie__text">
-                                                <h4 class="movie-name">${element.title}</h4>
-                                                <p class="text-as">${element.release_date}</p>
-                                                <div class="rating-chip">
-                                                    <i class="fas fa-star"></i>
-                                                    <span class="rating">${element.vote_average.toFixed(1)}</span>
-                                                </div>
-                                            </figcaption>
-                                        </figure>
-                                    </a>`;
-                recommendationsMovies.insertAdjacentHTML('beforeend', itemHTML);
-            });
-
-            if (data.recommendations.results.length > 10) {
-                const viewAllHTML = `<div class="view-all-card">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>`;
-                recommendationsMovies.insertAdjacentHTML('beforeend', viewAllHTML);
-            }
-        } else {
-            // Hide Section
-            const recommendations_movies_section = document.querySelector('.recommendations-movies-section');
-            recommendations_movies_section.style.display = 'none';
-        }
-
-
         // Set default poster img if real img failed to load
         document.querySelectorAll('.movie__poster, .poster__photo, .cast__photo, .poster, .b2collection-poster').forEach(e => {
             e.onerror = (img) => {
                 img.target.src = ImgDefaultPoster;
-            }
-        });
-
-        // Set default backdrop img if real img failed to load
-        document.querySelectorAll('.backdrop__photo').forEach(e => {
-            e.onerror = (img) => {
-                img.target.src = ImgDefaultBackdrop;
             }
         });
 
@@ -603,13 +263,461 @@ const windowOnload = () => {
         }
     });
 
+    // Register the section observer
+    document.querySelectorAll('section').forEach(section => {
+        sectionObserver.observe(section);
+        section.classList.add('section-entry-animation');
+    });
+
 }
 window.onload = windowOnload;
 
 
 
 
-// VIDEO POPUP OPEN / CLSOE LOGIC
+// SECTION OBSERVER  ------------------------------------------
+const loadSection = function (entries) {
+    // const [entry] = entries;
+    for (let index = 0; index < entries.length; index++) {
+        const entry = entries[index];
+
+        if (entry.isIntersecting) {
+
+            switch (entry.target.id) {
+                case 'genres':
+                    // Set Genres
+                    const genres = document.querySelector('.genres__content--items');
+                    movie.genres.forEach(element => {
+                        let genreImg;
+                        switch (element.name) {
+                            case "Action":
+                                genreImg = ImgAction;
+                                break;
+                            case "Adventure":
+                                genreImg = ImgAdventure;
+                                break;
+                            case "Animation":
+                                genreImg = ImgAnimation;
+                                break;
+                            case "Comedy":
+                                genreImg = ImgComedy;
+                                break;
+                            case "Crime":
+                                genreImg = ImgCrime;
+                                break;
+                            case "Documentary":
+                                genreImg = ImgDocumentary;
+                                break;
+                            case "Drama":
+                                genreImg = ImgDrama;
+                                break;
+                            case "Family":
+                                genreImg = ImgFamily;
+                                break;
+                            case "Fantasy":
+                                genreImg = ImgFantasy;
+                                break;
+                            case "History":
+                                genreImg = ImgHistory;
+                                break;
+                            case "Horror":
+                                genreImg = ImgHorror;
+                                break;
+                            case "Music":
+                                genreImg = ImgMusic;
+                                break;
+                            case "Mystery":
+                                genreImg = ImgMystery;
+                                break;
+                            case "Romance":
+                                genreImg = ImgRomance;
+                                break;
+                            case "Science Fiction":
+                                genreImg = ImgScienceFiction;
+                                break;
+                            case "TV Movie":
+                                genreImg = ImgTVMovie;
+                                break;
+                            case "Thriller":
+                                genreImg = ImgThriller;
+                                break;
+                            case "War":
+                                genreImg = ImgWar;
+                                break;
+                            case "Western":
+                                genreImg = ImgWestern;
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        const itemHTML = `  <figure class="genre">
+                                                <img class="genre__icon" src="${genreImg}" alt="${element.name}">
+                                                <figcaption class="genre__text"> ${element.name} </figcaption>
+                                            </figure>`;
+                        genres.insertAdjacentHTML('beforeend', itemHTML);
+                    });
+
+                    // const g = document.getElementById('genres');
+                    // // Add class for entry animation
+                    // g.classList.remove('section-entry-animation');
+                    // g.classList.add('section-entry-animation');
+                    break;
+
+                case 'storyline':
+                    // Set Storyline Background
+                    const storyline_container = document.querySelector('.storyline');
+                    if (movie.overview) {
+                        if (movie.images?.backdrops[1]?.file_path) {
+                            storyline_container.style.backgroundImage = `url(${backdrop_baseurl + movie.images?.backdrops[1]?.file_path})`;
+                        }
+                        // Set Storyline
+                        const storyline = document.querySelector('.storyline__content--items');
+                        storyline.textContent = movie.overview;
+                    } else {
+                        storyline_container.style.display = 'none';
+                    }
+                    break;
+
+                case 'casts':
+                    // Set Casts
+                    if (movie.credits && movie.credits.cast && movie.credits.cast.length > 0) {
+                        let castsToShow = [];
+                        if (movie.credits.cast.length > 10) {
+                            castsToShow = movie.credits.cast.slice(0, 9);
+                        } else {
+                            castsToShow = movie.credits.cast.slice(0, 10);
+                        }
+
+                        const casts = document.querySelector('.casts__content--items');
+                        castsToShow.forEach((element, index) => {
+                            const photoUrl = poster_baseurl + element.profile_path;
+                            const itemHTML = `  <figure class="cast">
+                                        <img class="cast__photo" src="${photoUrl}" data-id="${element.id}" alt="Photo of ${element.name}">
+                                        <figcaption class="cast__text">
+                                            <h4 class="cast-name">${element.name}</h4>
+                                            <p class="cast-as">${element.character}</p>
+                                        </figcaption>
+                                    </figure>`;
+                            casts.insertAdjacentHTML('beforeend', itemHTML);
+                        });
+
+                        if (movie.credits.cast.length > 10) {
+                            const viewAllHTML = `<div class="view-all-card">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                            casts.insertAdjacentHTML('beforeend', viewAllHTML);
+                        }
+
+                        // On click of cast show all his/her images in slideshow
+                        document.querySelectorAll('.cast__photo').forEach(ele => {
+                            ele.addEventListener('click', card => {
+                                if (card.target.dataset.id) {
+                                    // Get Cast Images
+                                    getPersonImages(card.target.dataset.id).then(data => {
+                                        const currIndex = 0;
+                                        const imgBaseUrl = poster_baseurl;
+                                        openSlideshowPopup(data.profiles, currIndex, imgBaseUrl);
+                                    });
+                                }
+                            });
+                        });
+
+                        // Set default poster img if real img failed to load
+                        document.querySelectorAll('.movie__poster, .poster__photo, .cast__photo, .poster, .b2collection-poster').forEach(e => {
+                            e.onerror = (img) => {
+                                img.target.src = ImgDefaultPoster;
+                            }
+                        });
+
+                    } else {
+                        // Hide Casts Section
+                        const casts_section = document.querySelector('.casts');
+                        casts_section.style.display = 'none';
+                    }
+                    break;
+
+                case 'posters':
+                    // Set Posters
+                    if (movie.images && movie.images.posters && movie.images.posters.length > 0) {
+                        let postersToShow = [];
+                        if (movie.images.posters.length > 10) {
+                            postersToShow = movie.images.posters.slice(0, 9);
+                        } else {
+                            postersToShow = movie.images.posters.slice(0, 10);
+                        }
+
+                        const posters = document.querySelector('.posters__content--items');
+                        postersToShow.forEach((element, i) => {
+                            const photoUrl = poster_baseurl + element.file_path;
+                            const itemHTML = `  <figure class="poster">
+                                        <img class="poster__photo" src="${photoUrl}" data-imgindex="${i}" alt="Poster of Movie">
+                                    </figure>`;
+                            posters.insertAdjacentHTML('beforeend', itemHTML);
+                        });
+
+                        if (movie.images.posters.length > 10) {
+                            const viewAllHTML = `<div class="view-all-card view-all-posters">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                            posters.insertAdjacentHTML('beforeend', viewAllHTML);
+                        }
+
+                        // setup slideshow popup
+                        document.querySelectorAll('.poster__photo').forEach(element => {
+                            element.addEventListener('click', (e) => {
+                                const currIndex = e.target.dataset.imgindex ? e.target.dataset.imgindex : 0;
+                                const imgBaseUrl = poster_baseurl;
+                                openSlideshowPopup(data.images.posters, currIndex, imgBaseUrl);
+                            });
+                        });
+                        // view all btn should show all images staring from next img
+                        document.querySelector('.view-all-posters')?.addEventListener('click', () => {
+                            const currIndex = 9;
+                            const imgBaseUrl = poster_baseurl;
+                            openSlideshowPopup(movie.images.posters, currIndex, imgBaseUrl);
+                        });
+
+                        // Set default poster img if real img failed to load
+                        document.querySelectorAll('.movie__poster, .poster__photo, .cast__photo, .poster, .b2collection-poster').forEach(e => {
+                            e.onerror = (img) => {
+                                img.target.src = ImgDefaultPoster;
+                            }
+                        });
+
+                    } else {
+                        // Hide Section
+                        const posters_section = document.querySelector('.posters');
+                        posters_section.style.display = 'none';
+                    }
+
+                    break;
+
+                case 'backdrops':
+                    // Set Backdrops
+                    if (movie.images && movie.images.backdrops && movie.images.backdrops.length > 0) {
+                        let backdropsToShow = [];
+                        if (movie.images.backdrops.length > 9) {
+                            backdropsToShow = movie.images.backdrops.slice(0, 8);
+                        } else {
+                            backdropsToShow = movie.images.backdrops.slice(0, 9);
+                        }
+
+                        const backdrops = document.querySelector('.backdrops__content--items');
+                        backdropsToShow.forEach((element, i) => {
+                            const photoUrl = poster_baseurl + element.file_path;
+                            const itemHTML = `  <figure class="backdrop">
+                                        <img class="backdrop__photo" src="${photoUrl}" data-imgindex="${i}" alt="Backdrop of Movie">
+                                    </figure>`;
+                            backdrops.insertAdjacentHTML('beforeend', itemHTML);
+                        });
+
+                        if (movie.images.backdrops.length > 9) {
+                            const viewAllHTML = `<div class="view-all-card view-all-backdrops">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                            backdrops.insertAdjacentHTML('beforeend', viewAllHTML);
+                        }
+
+                        // setup slideshow popup
+                        document.querySelectorAll('.backdrop__photo').forEach(element => {
+                            element.addEventListener('click', (e) => {
+                                const currIndex = e.target.dataset.imgindex ? e.target.dataset.imgindex : 0;
+                                const imgBaseUrl = backdrop_baseurl;
+                                openSlideshowPopup(movie.images.backdrops, currIndex, imgBaseUrl);
+                            });
+                        });
+                        // view all btn should show all images staring from next img
+                        document.querySelector('.view-all-backdrops')?.addEventListener('click', () => {
+                            const currIndex = 8;
+                            const imgBaseUrl = backdrop_baseurl;
+                            openSlideshowPopup(movie.images.backdrops, currIndex, imgBaseUrl);
+                        });
+
+                        // Set default backdrop img if real img failed to load
+                        document.querySelectorAll('.backdrop__photo').forEach(e => {
+                            e.onerror = (img) => {
+                                img.target.src = ImgDefaultBackdrop;
+                            }
+                        });
+
+                        // Set default poster img if real img failed to load
+                        document.querySelectorAll('.movie__poster, .poster__photo, .cast__photo, .poster, .b2collection-poster').forEach(e => {
+                            e.onerror = (img) => {
+                                img.target.src = ImgDefaultPoster;
+                            }
+                        });
+
+                    } else {
+                        // Hide Section
+                        const backdrops_section = document.querySelector('.backdrops');
+                        backdrops_section.style.display = 'none';
+                    }
+                    break;
+
+                case 'b2collection':
+                    // Set Belongs to Collection
+                    const backdrops_section = document.querySelector('.b2collection');
+                    if (movie.belongs_to_collection && movie.belongs_to_collection?.poster_path) {
+                        // Set Name
+                        const b2collectionName = document.querySelector('.b2collection-name');
+                        b2collectionName.textContent = movie.belongs_to_collection?.name;
+
+                        // Set Poster
+                        const poster = document.querySelector('.b2collection-poster');
+                        poster.src = poster_baseurl + movie.belongs_to_collection?.poster_path;
+
+                        // Set Background
+                        backdrops_section.style.backgroundImage = `url(${backdrop_baseurl + movie.belongs_to_collection.backdrop_path})`;
+
+                        // Set default poster img if real img failed to load
+                        document.querySelectorAll('.movie__poster, .poster__photo, .cast__photo, .poster, .b2collection-poster').forEach(e => {
+                            e.onerror = (img) => {
+                                img.target.src = ImgDefaultPoster;
+                            }
+                        });
+
+                    } else {
+                        // Hide Section
+                        backdrops_section.style.display = 'none';
+                    }
+                    break;
+
+                case 'similar':
+                    // Set Similar Movies
+                    if (movie.similar && movie.similar?.results && movie.similar?.results?.length > 0) {
+                        let moviesToShow = [];
+                        if (movie.similar.results.length > 10) {
+                            moviesToShow = movie.similar.results.slice(0, 9);
+                        } else {
+                            moviesToShow = movie.similar.results.slice(0, 10);
+                        }
+
+                        const similarMovies = document.querySelector('.similar-movies');
+                        moviesToShow.forEach(element => {
+                            const posterUrl = poster_baseurl + element.poster_path;
+                            const itemHTML = `  <a class="a-movie" href="?id=${element.id}">
+                                        <figure class="movie">
+                                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                                            <figcaption class="movie__text">
+                                                <h4 class="movie-name">${element.title}</h4>
+                                                <p class="text-as">${element.release_date}</p>
+                                                <div class="rating-chip">
+                                                    <i class="fas fa-star"></i>
+                                                    <span class="rating">${element.vote_average.toFixed(1)}</span>
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </a>`;
+                            similarMovies.insertAdjacentHTML('beforeend', itemHTML);
+                        });
+
+                        if (movie.similar.results.length > 10) {
+                            const viewAllHTML = `<div class="view-all-card">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                            similarMovies.insertAdjacentHTML('beforeend', viewAllHTML);
+                        }
+
+                        // Set default poster img if real img failed to load
+                        document.querySelectorAll('.movie__poster, .poster__photo, .cast__photo, .poster, .b2collection-poster').forEach(e => {
+                            e.onerror = (img) => {
+                                img.target.src = ImgDefaultPoster;
+                            }
+                        });
+
+                    } else {
+                        // Hide Section
+                        const similar_movies_section = document.querySelector('.similar-movies-section');
+                        similar_movies_section.style.display = 'none';
+                    }
+                    break;
+
+                case 'recommendations':
+                    // Set Recommendations Movies
+                    if (movie.recommendations && movie.recommendations?.results && movie.recommendations?.results?.length > 0) {
+                        let moviesToShow = [];
+                        if (movie.recommendations.results.length > 10) {
+                            moviesToShow = movie.recommendations.results.slice(0, 9);
+                        } else {
+                            moviesToShow = movie.recommendations.results.slice(0, 10);
+                        }
+
+                        const recommendationsMovies = document.querySelector('.recommendations-movies');
+                        moviesToShow.forEach(element => {
+                            const posterUrl = poster_baseurl + element.poster_path;
+                            const itemHTML = `  <a class="a-movie" href="?id=${element.id}">
+                                        <figure class="movie">
+                                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                                            <figcaption class="movie__text">
+                                                <h4 class="movie-name">${element.title}</h4>
+                                                <p class="text-as">${element.release_date}</p>
+                                                <div class="rating-chip">
+                                                    <i class="fas fa-star"></i>
+                                                    <span class="rating">${element.vote_average.toFixed(1)}</span>
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </a>`;
+                            recommendationsMovies.insertAdjacentHTML('beforeend', itemHTML);
+                        });
+
+                        if (movie.recommendations.results.length > 10) {
+                            const viewAllHTML = `<div class="view-all-card">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>`;
+                            recommendationsMovies.insertAdjacentHTML('beforeend', viewAllHTML);
+                        }
+
+                        // Set default poster img if real img failed to load
+                        document.querySelectorAll('.movie__poster, .poster__photo, .cast__photo, .poster, .b2collection-poster').forEach(e => {
+                            e.onerror = (img) => {
+                                img.target.src = ImgDefaultPoster;
+                            }
+                        });
+
+                    } else {
+                        // Hide Section
+                        const recommendations_movies_section = document.querySelector('.recommendations-movies-section');
+                        recommendations_movies_section.style.display = 'none';
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            // Unsubscribe the observer
+            sectionObserver.unobserve(entry.target);
+
+            // Add class for entry animation
+            entry.target.classList.remove('section-entry-animation');
+        }
+
+    }
+
+}
+
+
+const sectionObserver = new IntersectionObserver(loadSection, {
+    root: null,
+    threshold: 0,
+    rootMargin: `100px`
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+// VIDEO POPUP OPEN / CLOSE LOGIC
 
 document.querySelector('.play-video-button').addEventListener('click', openVideoPopup);
 

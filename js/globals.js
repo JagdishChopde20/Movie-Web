@@ -56,6 +56,15 @@ export const themeColors = [
         colorShade: '#cf3c4f',
         colorTint: '#ed576b'
     },
+    {
+        // dark
+        color: '#292929',
+        colorRgb: '40, 40, 40',
+        colorContrast: '#ffffff',
+        colorContrastRgb: '255, 255, 255',
+        colorShade: '#232323',
+        colorTint: '#3e3e3e'
+    },
 ];
 
 

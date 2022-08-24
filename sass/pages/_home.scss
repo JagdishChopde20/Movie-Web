@@ -3,7 +3,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
-  background-color: var(--color-accent-shade);
+  background-color: #292929; //var(--color-accent-shade);
   background-blend-mode: overlay;
   background-position: center;
 
@@ -13,7 +13,7 @@
 
   .tagline {
     padding: 10rem 8rem;
-    background-color: rgba(#000, 0.6);
+    // background-color: rgba(#000, 0.6);
     width: 85%;
     text-align: center;
 
@@ -23,7 +23,7 @@
 
     &__text {
       font-size: 6rem;
-      color: #fff;
+      color: var(--color-light);
       font-style: bold;
       text-transform: uppercase;
       margin-top: 5rem;
