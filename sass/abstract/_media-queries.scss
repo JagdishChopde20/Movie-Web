@@ -1,0 +1,25 @@
+html {
+  @media only screen and (min-width: 1800px) {
+    --base-font-size: 75%; //1rem = 12, 12/16 = 75%
+  }
+
+  @media only screen and (max-width: $bp-xxl) { // <1400px
+    --base-font-size: 60% !important; //1rem = 9.6, 9.6/16 = 60%
+  }
+
+  @media only screen and (max-width: $bp-xl) { // <1200px
+    --base-font-size: 55% !important; //1rem = 8.8, 8.8/16 = 55%
+  }
+
+  @media only screen and (max-width: $bp-lg) { // <992px
+    --base-font-size: 50% !important; //1rem = 8, 8/16 = 50%
+  }
+
+  @media only screen and (max-width: $bp-md) { // <768px
+    --base-font-size: 45% !important; //1rem = 7.2, 7.2/16 = 45%
+  }
+
+  @media only screen and (max-width: $bp-sm) { // <576px
+    --base-font-size: 40% !important; //1rem = 6.4, 6.4/16 = 40%
+  }
+}

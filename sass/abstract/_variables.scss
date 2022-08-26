@@ -12,11 +12,21 @@
   --color-light: #eeeeee;
   --color-accent1: #78e08f;
 
+  // BASE FONT SIZE
+  --base-font-size: 62.5%;
+
   // FONTS
   --font-head: "Fahkwang", sans-serif;
   --font-body: "Comfortaa", cursive;
   --font-cursive: "Great Vibes", cursive;
 }
+
+// RESPONSIVE BREAKPOINTS
+$bp-sm: 36em; // 576/16 = 36
+$bp-md: 48em; // 768/16 = 48
+$bp-lg: 62em; // 992/16 = 62
+$bp-xl: 75em; // 1200/16 = 75
+$bp-xxl: 87.5em; // 1400/16 = 87.5
 
 // COLORS
 // $color-text: #333;

@@ -140,6 +140,8 @@ const windowOnload = () => {
             if (data.images?.logos[0]?.file_path) {
                 const imgTitle = document.querySelector('.img-movie-title');
                 imgTitle.src = poster_baseurl + data.images.logos[0].file_path;
+                imgTitle.classList.add('animate__animated');
+                imgTitle.classList.add('animate__zoomInDown');
             }
         }
 
