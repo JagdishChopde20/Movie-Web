@@ -14,6 +14,7 @@
     <script type="module" src="https://kit.fontawesome.com/3349b47671.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="sass/main.scss">
+    <script type="module" src="js/globals.js"></script>
     <script type="module" src="js/index.js"></script>
 </head>
 
@@ -38,7 +39,7 @@
             <button class="btn-theme">
                 <i class="fas fa-fill-drip"></i>
             </button>
-            
+
             <div class="theme-palette-container">
                 <!-- items from js -->
             </div>
@@ -46,209 +47,27 @@
     </nav>
 
     <main class="container">
-        <!-- Section Hero -->
-        <section id="hero" class="hero">
-            <div class="tagline">
-                <img class="img-movie-title">
-                <h1 id="tagline" class="tagline__text animate__animated animate__heartBeat">LOADING...</h1>
+        <!-- Section Search -->
+        <section id="search" class="search">
+            <div class="searchbox">
+                <input type="text" class="searchbox__input" placeholder="Search Movie">
+                <button class="searchbox__button">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
         </section>
 
-        <!-- Section Overview -->
-        <section id="overview" class="overview section-grid section-padding">
-            <div class="overview__content overview-grid">
-                <div class="overview__content--poster">
-                    <img class="poster">
-                </div>
-                <div class="overview__content--details">
-                    <h2 class="movie-title">
-                        Movie Name
-                    </h2>
-                    <div class="rating-bar margin-top-medium">
-                        <div class="rating-chip">
-                            <i class="fas fa-star"></i>
-                            <span class="rating"></span>
-                        </div>
-                    </div>
-                    <div class="chips">
-                        <span class="chip">
-                            <i class="fas fa-language"></i>
-                            <span class="language"></span>
-                        </span>
-                        <span class="chip">
-                            <i class="fas fa-calendar-check"></i>
-                            <span class="status"></span>
-                        </span>
-                        <span class="chip">
-                            <i class="fas fa-clock"></i>
-                            <span class="runtime"></span>
-                        </span>
-                        <span class="chip">
-                            <i class="fas fa-heart"></i>
-                            <span class="votes">0</span>
-                        </span>
-                    </div>
-
-                    <div class="action-buttons">
-                        <button class="cta play-video-button margin-top-medium">
-                            <i class="fas fa-play cta__icon"></i>
-                            <span class="cta__text play-video-button__text">Play Trailer</span>
-                        </button>
-                        <a href="#posters" class="cta play-slideshow-button margin-top-medium">
-                            <i class="fas fa-images cta__icon"></i>
-                            <span class="cta__text">View Images</span>
-                        </a>
-                        <button class="cta a-homepage margin-top-medium">
-                            <i class="fas fa-globe cta__icon"></i>
-                            <span class="cta__text">Homepage</span>
-                        </button>
-                    </div>
-
-                    <div class="watchproviders margin-top-large">
-                        <h2 class="watchproviders--label">Streaming on</h2>
-                        <div class="watchproviders--items margin-top-small">
-                            <!-- items from js -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Genres -->
-        <section id="genres" class="genres section-grid section-padding">
-            <div class="genres__content">
-                <h2 class="section-title">Movie Genres</h2>
-                <div class="genres__content--items">
-                    <!-- items from js -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Storyline -->
-        <section id="storyline" class="storyline section-grid section-padding">
-            <div class="storyline__content">
-                <h2 class="section-title">Storyline</h2>
-                <div class="storyline__content--items">
-                    storyline
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Casts -->
-        <section id="casts" class="casts section-grid section-padding">
-            <div class="casts__content">
-                <h2 class="section-title">Casts</h2>
-                <div class="casts__content--items item-small-grid">
-                    <!-- items from js -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Posters -->
-        <section id="posters" class="posters section-grid section-padding">
-            <div class="posters__content">
-                <h2 class="section-title">Posters</h2>
-                <div class="posters__content--items item-small-grid">
-                    <!-- items from js -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Backdrops -->
-        <section id="backdrops" class="backdrops section-grid section-padding">
-            <div class="backdrops__content">
-                <h2 class="section-title">Backdrops</h2>
-                <div class="backdrops__content--items item-grid">
-                    <!-- items from js -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Belongs to Collection -->
-        <section id="b2collection" class="b2collection section-grid section-padding section-margin">
-            <div class="b2collection__content overview-grid">
-                <div class="b2collection__content--poster">
-                    <img class="b2collection-poster">
-                </div>
-                <div class="b2collection__content--details">
-                    <p>BELONGS TO</p>
-                    <h2 class="section-title b2collection-name">
-                        Belongs to Collection
-                    </h2>
-                    <button class="cta margin-top-medium">
-                        <i class="fas fa-play cta__icon"></i>
-                        <span class="cta__text">Visit Collection</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Similar -->
-        <section id="similar" class="similar-movies-section movies section-grid section-padding ">
+        <!-- Section Movies -->
+        <section class="search-movies-section movies section-grid section-padding ">
             <div class="movies__content">
-                <h2 class="section-title">Simillar Movies</h2>
-                <div class="similar-movies movies__content--items item-small-grid">
+                <h2 id="search-heading" class="section-title">Explore Movies</h2>
+                <div class="search-movies movies__content--items item-small-grid">
                     <!-- items from js -->
                 </div>
             </div>
         </section>
-
-        <!-- Section Recommendations -->
-        <section id="recommendations" class="recommendations-movies-section movies section-grid margin-top-small">
-            <div class="movies__content">
-                <h2 class="section-title">Recommendations Movies</h2>
-                <div class="recommendations-movies movies__content--items item-small-grid">
-                    <!-- items from js -->
-                </div>
-            </div>
-        </section>
-
-        <br><br><br>
     </main>
-
-
-    <div class="video-popup">
-    </div>
-    <div class="video-container">
-        <button id="btnCloseVideoPopup" title="Close"><i class="fas fa-times"></i></button>
-        <div class="video-content">
-            <iframe id="iframe-video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </div>
-
-
-    <div class="slideshow-container">
-        <button id="btnCloseSlideshowPopup" title="Close"><i class="fas fa-times"></i></button>
-        <div class="slideshow-content">
-            <div class="lds-spinner">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <!-- <img src="https://image.tmdb.org/t/p/w780/bi2MCDYvrZQPf1uXyvfVYPE57Mz.jpg" alt="" > -->
-            <img alt="Image of Movie">
-
-            <span class="slideshow-status"></span>
-
-            <button id="btnPrevisousImage" title="Previous" class="icon-img icon-img--previous">
-                <i class="far fa-arrow-alt-circle-left"></i>
-            </button>
-
-            <button id="btnNextImage" title="Next" class="icon-img icon-img--next">
-                <i class="far fa-arrow-alt-circle-right"></i>
-            </button>
-        </div>
-    </div>
-
+    
     <button id="btnGoToTop" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
 </body>

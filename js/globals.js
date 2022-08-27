@@ -1017,3 +1017,89 @@ const languages = [
 export const getFullLanguageName = (lcode) => {
     return languages.find(x => x.iso_639_1 == lcode)?.english_name;
 }
+
+
+function setThemeColor(colorIndex) {
+    const themeColor = themeColors[colorIndex]; // Math.floor(Math.random() * themeColors.length)// Get the root element
+
+    var r = document.querySelector(':root');
+
+    // Set the value of accent color css variables
+    r.style.setProperty('--color-accent', themeColor.color);
+    r.style.setProperty('--color-accent-rgb', themeColor.colorRgb);
+    r.style.setProperty('--color-accent-contrast', themeColor.colorContrast);
+    r.style.setProperty('--color-accent-shade', themeColor.colorShade);
+    r.style.setProperty('--color-accent-tint', themeColor.colorTint);
+}
+
+let colorIndex = 0;
+
+function setColorPalette() {
+    // get theme color lastly saved into localStorage
+    const themeColorIndex = localStorage.getItem('themeColorIndex');
+    if (themeColorIndex) {
+        colorIndex = themeColorIndex;
+        setThemeColor(themeColorIndex);
+    } else {
+        setThemeColor(colorIndex);
+    }
+
+    const themeContainer = document.querySelector('.theme-palette-container');
+
+    for (let index = 0; index < themeColors.length; index++) {
+        const color = themeColors[index];
+        const themeBtn = `  <button class="btn-theme-palette" data-index="${index}" style="background-color:${color.color}; color:${index == colorIndex ? '#fff' : color.color}">
+                                <i class="fas fa-fill-drip"></i>
+                            </button>`;
+        themeContainer.insertAdjacentHTML('beforeend', themeBtn);
+    }
+
+    document.querySelectorAll('.btn-theme-palette').forEach((e) => {
+        e.addEventListener('click', (btn) => {
+            const prevBtn = document.querySelector(`button[data-index='${colorIndex}']`);
+            prevBtn.style.color = prevBtn.style.backgroundColor;
+
+            colorIndex = btn.target.dataset.index;
+            btn.target.style.color = '#fff';
+
+            setThemeColor(colorIndex);
+
+            // set theme color lastly saved into localStorage
+            localStorage.setItem('themeColorIndex', colorIndex);
+        })
+    });
+}
+setColorPalette();
+
+document.querySelector('.btn-theme').addEventListener('click', (e) => {
+    const palette = document.querySelector('.theme-palette-container');
+    if (palette.style.visibility == 'visible') {
+        palette.style.visibility = 'collapse';
+    } else {
+        palette.style.visibility = 'visible';
+    }
+});
+
+// CODE FOR GO TO TOP BUTTON
+//Get the button
+var mybutton = document.getElementById("btnGoToTop");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () { scrollFunction() };
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+    } else {
+        mybutton.style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+mybutton.addEventListener('click', topFunction);
+

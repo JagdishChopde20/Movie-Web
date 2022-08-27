@@ -3,6 +3,11 @@
 const apiKey = 'fa95cddfa25a27f18e30bbdbd383054b';
 const baseUrl = 'https://api.themoviedb.org/3';
 
+export const baseImgUrl = 'https://image.tmdb.org/t/p/';
+export const poster_baseurl = baseImgUrl + 'w780';
+export const backdrop_baseurl = baseImgUrl + 'w1280';
+export const logo_baseurl = baseImgUrl + 'w300';
+
 const getHttpResult = async (url) => {
     try {
         const res = await fetch(url);
@@ -13,6 +18,16 @@ const getHttpResult = async (url) => {
     }
     return null;
 
+}
+
+export const getSearchMovies = (query) => {
+    const url = `${baseUrl}/search/movie?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=true`;
+    return getHttpResult(url);
+}
+
+export const getPopularMovies = (pageNo = 1) => {
+    const url = `${baseUrl}/movie/popular?api_key=${apiKey}&page=${pageNo}`;
+    return getHttpResult(url);
 }
 
 export const getMovieDetails = async (id) => {
