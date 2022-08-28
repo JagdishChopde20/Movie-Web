@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "npx parcel build index.html",
+    "build": "npx parcel build movie.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jagdish Chopde",
