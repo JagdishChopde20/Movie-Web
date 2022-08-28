@@ -14,8 +14,12 @@
   .tagline {
     padding: 10rem 8rem;
     // background-color: rgba(#000, 0.6);
-    width: 85%;
     text-align: center;
+    width: 85%;
+    @media only screen and (max-width: $bp-sm) {
+      // <576px
+      width: 99%;
+    }
 
     .img-movie-title {
       max-height: 50vh;
@@ -29,6 +33,10 @@
       font-style: bold;
       font-family: var(--font-head);
       margin-top: 5rem;
+      @media only screen and (max-width: $bp-sm) {
+        // <576px
+        font-size: 2rem;
+      }
     }
   }
 }
@@ -67,9 +75,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        // & >:not(:last-child) {
-        //   width: 30rem;
-        // }
+        & > :last-child {
+          @media only screen and (max-width: $bp-sm) {
+            // <576px
+            display: none;
+          }
+        }
       }
 
       .watchproviders {
