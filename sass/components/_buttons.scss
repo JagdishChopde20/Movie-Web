@@ -104,7 +104,17 @@
   height: 50px;
   width: 50px;
   box-shadow: rgba(23, 23, 23, 0.25) 0px 0px 25px 0px;
-  transition: all .3s;
+  transition: all 0.3s;
+  opacity: .9;
+
+  @media only screen and (max-width: $bp-sm) {
+    // <576px
+    height: 40px;
+    width: 40px;
+    bottom: 15px;
+    right: 15px;
+    font-size: 14px;
+  }
 }
 
 #btnGoToTop:hover {

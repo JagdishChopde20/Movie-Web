@@ -2,22 +2,40 @@
     display: grid;
     grid-template-columns: [grid-start] minmax(15px, 1fr) [content-start] minmax(min-content, 127rem) [content-end] minmax(15px, 1fr) [grid-end];
     grid-gap: 3rem;
+    
+    @media only screen and (max-width: $bp-sm) {
+        // <576px
+        grid-template-columns: [grid-start] minmax(0px, 1fr) [content-start] minmax(min-content, 127rem) [content-end] minmax(0px, 1fr) [grid-end];
+    }
 }
 
-.overview-grid {
+.overview-grid {    
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 5rem;
+
+    @media only screen and (max-width: $bp-sm) {
+      // <576px
+      grid-template-columns: 1fr;
+    }
 }
 
 .item-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(36rem, 1fr));
     gap: 3rem;
+
+    @media only screen and (max-width: $bp-sm) { // <576px
+      grid-template-columns: repeat(2, minmax(5rem, 1fr));
+    }
 }
 
 .item-small-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
     gap: 3rem;
+    
+  @media only screen and (max-width: $bp-sm) { // <576px
+    grid-template-columns: repeat(3, minmax(5rem, 1fr));
+  }
 }

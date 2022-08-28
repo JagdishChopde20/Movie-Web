@@ -21,8 +21,8 @@ const windowOnload = () => {
             loadMovies(data);
         });
         document.querySelector('.searchbox__input').value = query;
-        // const sectionHeading = document.getElementById('search-heading');
-        // sectionHeading?.innerHTML  = `Search results for "${query}"`;
+
+        // document.getElementById('search-heading')?.textContent = `Search results for "${query}"`;
     } else {
         // Get Popular Movies
         getPopularMovies().then(data => {
@@ -42,7 +42,7 @@ window.onload = windowOnload;
 const performSearch = () => {
     const query = document.querySelector('.searchbox__input').value;
     if (query) {
-        window.open('index.html?query=' + query);
+        window.open('index.html?query=' + query, '_self');
     }
 }
 
@@ -62,7 +62,7 @@ const loadMovies = (movies) => {
         const searchMovies = document.querySelector('.search-movies');
         moviesToShow.forEach(element => {
             const posterUrl = poster_baseurl + element.poster_path;
-            const itemHTML = `  <a class="a-movie" href="movie.html?id=${element.id}">
+            const itemHTML = `  <a class="a-movie" href="movie.html?id=${element.id}" rel="noopener noreferrer">
                         <figure class="movie">
                             <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
                             <figcaption class="movie__text">
