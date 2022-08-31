@@ -1,6 +1,6 @@
 // @ts-check
 
-import { getMovieDetails, genres, getWatchProviders, getPersonImages, baseImgUrl, poster_baseurl, backdrop_baseurl, logo_baseurl } from "./api";
+import { getMovieDetails, genres, getWatchProviders, getPersonImages, baseImgUrl, setResponsiveLogo, setResponsiveMainPoster, getResponsivePosterSrcset, poster_media_sizes, getResponsiveBackdropSrcset, backdrop_media_sizes, poster_baseurl, backdrop_baseurl, logo_baseurl } from "./api";
 import { getFullLanguageName } from "./globals";
 
 // DEFAULT POSTER IMAGE
@@ -69,10 +69,10 @@ const windowOnload = () => {
             const tagline = document.querySelector('.tagline__text');
             tagline.textContent = data.tagline;
 
-            // Set Movie Title Image
+            // Set Movie Logo Image
             if (data.images?.logos[0]?.file_path) {
                 const imgTitle = document.querySelector('.img-movie-title');
-                imgTitle.src = poster_baseurl + data.images.logos[0].file_path;
+                setResponsiveLogo(imgTitle, data.images?.logos[0]?.file_path);
                 imgTitle.classList.add('animate__animated');
                 imgTitle.classList.add('animate__zoomInDown');
             }
@@ -80,7 +80,8 @@ const windowOnload = () => {
 
         // Set Poster
         const poster = document.querySelector('.poster');
-        poster.src = poster_baseurl + data.poster_path;
+        setResponsiveMainPoster(poster, data.poster_path);
+        // poster.src = poster_baseurl + data.poster_path;
 
         // Set Title
         const title = document.querySelector('.movie-title');
@@ -222,7 +223,7 @@ const loadSection = function (entries) {
                 case 'genres':
                     // Set Genres
                     const genres = document.querySelector('.genres__content--items');
-                    movie.genres.forEach(element => {
+                    movie?.genres?.forEach(element => {
                         let genreImg;
                         switch (element.name) {
                             case "Action":
@@ -329,7 +330,7 @@ const loadSection = function (entries) {
                         castsToShow.forEach((element, index) => {
                             const photoUrl = poster_baseurl + element.profile_path;
                             const itemHTML = `  <figure class="cast">
-                                        <img class="cast__photo" src="${photoUrl}" data-id="${element.id}" alt="Photo of ${element.name}">
+                                        <img class="cast__photo" srcset="${getResponsivePosterSrcset(element.profile_path)}" sizes="${poster_media_sizes}" src="${photoUrl}" data-id="${element.id}" alt="Photo of ${element.name}">
                                         <figcaption class="cast__text">
                                             <h4 class="cast-name">${element.name}</h4>
                                             <p class="cast-as">${element.character}</p>
@@ -387,7 +388,7 @@ const loadSection = function (entries) {
                         postersToShow.forEach((element, i) => {
                             const photoUrl = poster_baseurl + element.file_path;
                             const itemHTML = `  <figure class="poster">
-                                        <img class="poster__photo" src="${photoUrl}" data-imgindex="${i}" alt="Poster of Movie">
+                                        <img class="poster__photo" srcset="${getResponsivePosterSrcset(element.file_path)}" sizes="${poster_media_sizes}" src="${photoUrl}" data-imgindex="${i}" alt="Poster of Movie">
                                     </figure>`;
                             posters.insertAdjacentHTML('beforeend', itemHTML);
                         });
@@ -443,15 +444,15 @@ const loadSection = function (entries) {
                         backdropsToShow.forEach((element, i) => {
                             const photoUrl = poster_baseurl + element.file_path;
                             const itemHTML = `  <figure class="backdrop">
-                                        <img class="backdrop__photo" src="${photoUrl}" data-imgindex="${i}" alt="Backdrop of Movie">
-                                    </figure>`;
+                                                    <img class="backdrop__photo" srcset="${getResponsiveBackdropSrcset(element.file_path)}" sizes="${backdrop_media_sizes}" src="${photoUrl}" data-imgindex="${i}" alt="Backdrop of Movie">
+                                                </figure>`;
                             backdrops.insertAdjacentHTML('beforeend', itemHTML);
                         });
 
                         if (movie.images.backdrops.length > 9) {
                             const viewAllHTML = `<div class="view-all-card view-all-backdrops">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>`;
+                                                    <i class="fas fa-chevron-right"></i>
+                                                </div>`;
                             backdrops.insertAdjacentHTML('beforeend', viewAllHTML);
                         }
 
@@ -501,7 +502,8 @@ const loadSection = function (entries) {
 
                         // Set Poster
                         const poster = document.querySelector('.b2collection-poster');
-                        poster.src = poster_baseurl + movie.belongs_to_collection?.poster_path;
+                        setResponsiveMainPoster(poster, movie.belongs_to_collection?.poster_path);
+                        // poster.src = poster_baseurl + movie.belongs_to_collection?.poster_path;
 
                         // Set Background
                         backdrops_section.style.backgroundImage = `url(${backdrop_baseurl + movie.belongs_to_collection.backdrop_path})`;
@@ -534,7 +536,7 @@ const loadSection = function (entries) {
                             const posterUrl = poster_baseurl + element.poster_path;
                             const itemHTML = `  <a class="a-movie" href="?id=${element.id}">
                                         <figure class="movie">
-                                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                                            <img class="movie__poster" srcset="${getResponsivePosterSrcset(element.poster_path)}" sizes="${poster_media_sizes}" src="${posterUrl}" alt="Poster of ${element.title}">
                                             <figcaption class="movie__text">
                                                 <h4 class="movie-name">${element.title}</h4>
                                                 <p class="text-as">${element.release_date}</p>
@@ -584,7 +586,7 @@ const loadSection = function (entries) {
                             const posterUrl = poster_baseurl + element.poster_path;
                             const itemHTML = `  <a class="a-movie" href="?id=${element.id}">
                                         <figure class="movie">
-                                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                                            <img class="movie__poster" srcset="${getResponsivePosterSrcset(element.poster_path)}" sizes="${poster_media_sizes}" src="${posterUrl}" alt="Poster of ${element.title}">
                                             <figcaption class="movie__text">
                                                 <h4 class="movie-name">${element.title}</h4>
                                                 <p class="text-as">${element.release_date}</p>

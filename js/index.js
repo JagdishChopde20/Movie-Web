@@ -1,6 +1,6 @@
 // @ts-check
 
-import { getPopularMovies, getSearchMovies, poster_baseurl } from "./api";
+import { getPopularMovies, getSearchMovies, poster_baseurl, getResponsivePosterSrcset, poster_media_sizes } from "./api";
 
 // DEFAULT POSTER IMAGE
 import ImgDefaultPoster from "../assets/no-poster.png";
@@ -64,7 +64,7 @@ const loadMovies = (movies) => {
             const posterUrl = poster_baseurl + element.poster_path;
             const itemHTML = `  <a class="a-movie" href="movie.html?id=${element.id}" rel="noopener noreferrer">
                         <figure class="movie">
-                            <img class="movie__poster" src="${posterUrl}" alt="Poster of ${element.title}">
+                            <img class="movie__poster" srcset="${getResponsivePosterSrcset(element.poster_path)}" sizes="${poster_media_sizes}" src="${posterUrl}" alt="Poster of ${element.title}">
                             <figcaption class="movie__text">
                                 <h4 class="movie-name">${element.title}</h4>
                                 <p class="text-as">${element.release_date}</p>

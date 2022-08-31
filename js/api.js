@@ -1,10 +1,13 @@
 // @ts-check
 
+// API Key
 const apiKey = 'fa95cddfa25a27f18e30bbdbd383054b';
+
+// API Base URL
 const baseUrl = 'https://api.themoviedb.org/3';
 
 export const baseImgUrl = 'https://image.tmdb.org/t/p/';
-export const poster_baseurl = baseImgUrl + 'w780';
+export const poster_baseurl = baseImgUrl + 'w500';
 export const backdrop_baseurl = baseImgUrl + 'w1280';
 export const logo_baseurl = baseImgUrl + 'w300';
 
@@ -133,3 +136,66 @@ export const genres = {
         }
     ]
 };
+
+const logo_sizes = [
+    "w45",
+    "w92",
+    "w154",
+    "w185",
+    "w300",
+    "w500",
+];
+
+export const setResponsiveLogo = (ele, file_path) => {
+    let srcset = '';
+    logo_sizes.forEach((size, i) => {
+        srcset += `${baseImgUrl}${size}${file_path} ${size.substring(1)}w${(i >= (logo_sizes.length - 1)) ? '' : ', '}`;
+    });
+    ele.srcset = srcset;
+    ele.sizes = `(max-width: 576px) 55vw, (max-width: 768px) 46vw, (max-width: 992px) 40vw, (max-width: 1200px) 36vw, (min-width: 1400px) 35vw, 50vw`;
+    ele.src = baseImgUrl + 'w300' + file_path;
+}
+
+const poster_sizes = [
+    "w92",
+    "w154",
+    "w185",
+    "w342",
+    "w500",
+    "w780",
+];
+export const poster_media_sizes = '(max-width: 576px) 27vw, (max-width: 768px) 27vw, (max-width: 992px) 20vw, (max-width: 1200px) 21vw, (min-width: 1400px) 16vw, 30vw';
+
+export const setResponsiveMainPoster = (ele, file_path) => {
+    let srcset = '';
+    poster_sizes.forEach((size, i) => {
+        srcset += `${baseImgUrl}${size}${file_path} ${size.substring(1)}w${(i >= (poster_sizes.length - 1)) ? '' : ', '}`;
+    });
+    ele.srcset = srcset;
+    ele.sizes = '(max-width: 576px) 90vw, (max-width: 768px) 27vw, (max-width: 992px) 28vw, (max-width: 1200px) 29vw, (min-width: 1400px) 27vw, 50vw';
+    ele.src = baseImgUrl + 'w342' + file_path;
+}
+
+
+export const getResponsivePosterSrcset = (file_path) => {
+    let srcset = '';
+    poster_sizes.forEach((size, i) => {
+        srcset += `${baseImgUrl}${size}${file_path} ${size.substring(1)}w${(i >= (poster_sizes.length - 1)) ? '' : ', '}`;
+    });
+    return srcset;
+}
+
+const backdrop_sizes = [
+    "w300",
+    "w780",
+    "w1280",
+];
+export const backdrop_media_sizes = '(max-width: 576px) 42vw, (max-width: 768px) 42vw, (max-width: 992px) 44vw, (max-width: 1200px) 29vw, (min-width: 1400px) 27vw, 30vw';
+
+export const getResponsiveBackdropSrcset = (file_path) => {
+    let srcset = '';
+    backdrop_sizes.forEach((size, i) => {
+        srcset += `${baseImgUrl}${size}${file_path} ${size.substring(1)}w${(i >= (backdrop_sizes.length - 1)) ? '' : ', '}`;
+    });
+    return srcset;
+}
